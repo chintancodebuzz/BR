@@ -1,15 +1,13 @@
 import { Heart, ShoppingCart, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../slices/cartSlice";
-import { addToWishlist, removeFromWishlist } from "../../slices/wishlistSlice";
-import { useToast } from "../../contexts/ToastContext";
+import { addToCart, fetchCart } from "../../slices/cartSlice";
+import { addToWishlist, fetchWishlist, removeFromWishlist } from "../../slices/wishlistSlice";
 
 export default function ProductCard({ product, viewMode = 'grid' }) {
     const dispatch = useDispatch();
-    const toast = useToast();
     const { items: wishlistItems } = useSelector((state) => state.wishlist);
-
+    const navigate = useNavigate();
     const productId = product.id || product._id;
     const name = product.name || product.title;
     const sellingPrice = product.selling_price || product.price || product.salePrice || 0;
@@ -30,15 +28,16 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                     (item.product?.id || item.product?._id || item.id || item._id) === productId
                 );
                 if (wishlistItem) {
-                    await dispatch(removeFromWishlist(wishlistItem._id || wishlistItem.id)).unwrap();
-                    toast.info("Removed from wishlist");
+                    await dispatch(removeFromWishlist(wishlistItem._id || wishlistItem.id));
+                    await dispatch(fetchWishlist());
+
                 }
             } else {
-                await dispatch(addToWishlist(productId)).unwrap();
-                toast.success("Added to wishlist");
+                await dispatch(addToWishlist(productId));
+                await dispatch(fetchWishlist());
             }
         } catch (error) {
-            toast.error(error?.message || "Failed to update wishlist");
+            console.error(error?.message || "Failed to update wishlist");
         }
     };
 
@@ -46,10 +45,10 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
         e.preventDefault();
         e.stopPropagation();
         try {
-            await dispatch(addToCart(productId)).unwrap();
-            toast.success("Added to cart");
+            await dispatch(addToCart(productId));
+            await dispatch(fetchCart());
         } catch (error) {
-            toast.error(error?.message || "Failed to add to cart");
+            console.error(error?.message || "Failed to add to cart");
         }
     };
 
@@ -135,7 +134,8 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                 <img
                     src={displayImage}
                     alt={name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onClick={() => navigate(`/products/${productId}`)}
+                    className="w-full cursor-pointer h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
 
                 {discount && (
@@ -155,14 +155,14 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                     />
                 </button>
 
-                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                {/* <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Link
                         to={`/products/${productId}`}
                         className="bg-white text-[#501F08] py-2 px-4 rounded-lg font-bold text-[10px] tracking-widest hover:bg-[#501F08] hover:text-white transition-all shadow-md uppercase"
                     >
                         View Details
                     </Link>
-                </div>
+                </div> */}
             </div>
 
             <div className="p-4 flex flex-col flex-1">

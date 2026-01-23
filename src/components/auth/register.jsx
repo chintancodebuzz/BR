@@ -155,7 +155,6 @@ const Register = () => {
     if (success) {
       setIsEmailVerified(true);
       setShowOTPModal(false);
-      // Success toast is handled by OTPModal
     }
   };
 

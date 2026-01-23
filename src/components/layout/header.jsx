@@ -9,7 +9,7 @@ import LogoutModal from "../models/LogoutModal";
 import { User, LogOut, Heart, ShoppingCart } from "lucide-react";
 import { fetchCart } from "../../slices/cartSlice";
 import { fetchWishlist } from "../../slices/wishlistSlice";
-
+import DefaultProfile from "../../assets/home/default-profile.svg";
 export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,9 +26,7 @@ export default function Header() {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  useEffect(() => {
-    dispatch(getProfile());
-  }, []);
+
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -311,17 +309,14 @@ export default function Header() {
             {isAuthenticated ? (
               <div className="relative group ml-2">
                 <button className="flex items-center gap-2 text-[#501F08] font-medium hover:text-[#3a1606] transition-colors p-1.5 rounded-lg hover:bg-[#501F08]/5">
-                  <div className="w-10 h-10 rounded-full bg-[#501F08] flex items-center justify-center text-white text-sm font-bold shadow-inner overflow-hidden">
-                    {user?.profile ? (
-                      <img
-                        src={user?.profile}
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      getInitials(user?.name)
-                    )}
+                  <div className="w-10 h-10 rounded-full bg-[#501F08]/5 flex items-center justify-center text-[#501F08] text-sm font-bold shadow-inner overflow-hidden border border-[#501F08]/10">
+                    <img
+                      src={user?.profile || DefaultProfile}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+
                   <span className="max-w-[100px] truncate">
                     {user?.name || "User"}
                   </span>
@@ -382,17 +377,14 @@ export default function Header() {
               {/* User Info Mobile */}
               {isAuthenticated && (
                 <div className="flex items-center gap-3 py-3 border-b mb-2">
-                  <div className="w-10 h-10 rounded-full bg-[#501F08] flex items-center justify-center text-white font-bold shadow-md overflow-hidden">
-                    {user?.profile ? (
-                      <img
-                        src={user?.profile}
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      getInitials(user?.name)
-                    )}
+                  <div className="w-10 h-10 rounded-full bg-[#501F08]/5 flex items-center justify-center text-[#501F08] font-bold shadow-md overflow-hidden border border-[#501F08]/10">
+                    <img
+                      src={user?.profile || DefaultProfile}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+
                   <div>
                     <p className="font-semibold text-gray-900">
                       {user?.name || "User"}

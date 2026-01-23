@@ -6,6 +6,7 @@ import { Loader2, Edit2, Camera, Save, X } from "lucide-react";
 import { updateUserProfile, getUserProfile } from "../../services/authApi";
 import { setUser } from "../../slices/authSlice";
 import { useToast } from "../../contexts/ToastContext";
+import DefaultProfile from "../../assets/home/default-profile.svg";
 
 export default function AccountOverview() {
     const { user } = useSelector((state) => state.auth);
@@ -17,7 +18,7 @@ export default function AccountOverview() {
     const [profileImage, setProfileImage] = useState(null);
     // keep the existing profile image in view mode; in edit mode we update it when selecting a file
     const [imagePreview, setImagePreview] = useState(
-        user?.profile || null
+        user?.profile || DefaultProfile
     );
 
     // Update imagePreview when user.profile changes (e.g., after refresh or profile update)

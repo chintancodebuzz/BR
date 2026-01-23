@@ -15,16 +15,14 @@ import {
     Share2
 } from "lucide-react";
 import { fetchProductDetail, clearSelectedProduct } from "../../../slices/productSlice";
-import { addToCart } from "../../../slices/cartSlice";
+import { addToCart, fetchCart } from "../../../slices/cartSlice";
 import { addToWishlist, removeFromWishlist } from "../../../slices/wishlistSlice";
-import { useToast } from "../../../contexts/ToastContext";
 import { ProductSkeleton } from "../../../components/common/Skeleton";
 
 export default function ProductDetail() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const toast = useToast();
 
     const { selectedProduct: product, productLoading: loading, error } = useSelector((state) => state.product);
     const { items: wishlistItems } = useSelector((state) => state.wishlist);
@@ -60,23 +58,21 @@ export default function ProductDetail() {
                     (item.product?.id || item.product?._id || item.id || item._id) === product?.id
                 );
                 await dispatch(removeFromWishlist(wishlistItem._id || wishlistItem.id)).unwrap();
-                toast.info("Removed from wishlist");
             } else {
                 await dispatch(addToWishlist(product.id)).unwrap();
-                toast.success("Added to wishlist");
             }
         } catch (err) {
-            toast.error(err?.message || "Action failed");
+            console.error(err?.message || "Action failed");
         }
     };
 
     const handleAddToCart = async () => {
         if (!user) return navigate('/login');
         try {
-            await dispatch(addToCart(product.id)).unwrap();
-            toast.success("Added to cart");
+            await dispatch(addToCart(product.id))
+            await dispatch(fetchCart())
         } catch (err) {
-            toast.error(err?.message || "Failed to add to cart");
+            console.error(err?.message || "Failed to add to cart");
         }
     };
 
