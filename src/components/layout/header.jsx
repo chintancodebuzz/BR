@@ -22,7 +22,6 @@ export default function Header() {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-
   useEffect(() => {
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
@@ -42,10 +41,8 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getProfile());
-    }
-  }, [isAuthenticated]);
+    dispatch(getProfile());
+  }, []);
 
   useEffect(() => {
     dispatch(fetchCollections());
@@ -61,6 +58,15 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  const getInitials = (name) => {
+    if (!name) return "US";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
   // Tailwind classes for active animation
   const activeClass =
     "after:block after:w-full after:h-1 after:bg-[#501F08] after:rounded-full after:transition-all";
@@ -68,10 +74,11 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-50">
       <header
-        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${scrolled
-          ? "backdrop-blur-md shadow-lg top-7"
-          : "backdrop-blur-md shadow-lg top-7"
-          } `}
+        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${
+          scrolled
+            ? "backdrop-blur-md shadow-lg top-7"
+            : "backdrop-blur-md shadow-lg top-7"
+        } `}
       >
         <div className="mx-auto px-6 md:px-12 lg:px-24 py-1 flex items-center justify-between">
           {/* Logo */}
@@ -89,7 +96,8 @@ export default function Header() {
               to={APP_ROUTES.HOME}
               end
               className={({ isActive }) =>
-                `hover:text-[#501F08] relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-[#501F08] relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -103,7 +111,7 @@ export default function Header() {
               <button className="flex items-center gap-1 hover:text-[#501F08] cursor-pointer relative transition-colors group">
                 COLLECTIONS
                 <svg
-                  className={`w-3 h-3 transition-transform duration-300 ${desktopProductsOpen ? 'rotate-180' : ''}`}
+                  className={`w-3 h-3 transition-transform duration-300 ${desktopProductsOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -117,8 +125,6 @@ export default function Header() {
                 </svg>
                 {desktopProductsOpen && (
                   <div className="absolute left-0 top-full mt-2 w-72 bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
-
-
                     {/* Scrollable Content with Custom Scrollbar */}
                     <div className="max-h-96 overflow-y-auto custom-scrollbar">
                       {/* Gradient Fade Top */}
@@ -134,8 +140,6 @@ export default function Header() {
                               onClick={() => setDesktopProductsOpen(false)}
                             >
                               <div className="flex items-center gap-3 px-4 py-2 justify-between rounded-xl hover:bg-gradient-to-r hover:from-[#501F08]/5 hover:to-[#501F08]/10 transition-all duration-300 border border-transparent hover:border-[#501F08]/20">
-
-
                                 {/* Collection Name */}
                                 <div>
                                   <p className="font-semibold text-gray-800 group-hover/item:text-[#501F08] transition-colors">
@@ -156,7 +160,11 @@ export default function Header() {
                                   strokeWidth="2"
                                   viewBox="0 0 24 24"
                                 >
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M9 5l7 7-7 7"
+                                  />
                                 </svg>
                               </div>
                             </Link>
@@ -164,11 +172,23 @@ export default function Header() {
                         ) : (
                           <div className="px-4 py-8 text-center">
                             <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
-                              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                              <svg
+                                className="w-8 h-8 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                />
                               </svg>
                             </div>
-                            <p className="text-sm text-gray-500 font-medium">No collections available</p>
+                            <p className="text-sm text-gray-500 font-medium">
+                              No collections available
+                            </p>
                           </div>
                         )}
                       </div>
@@ -206,7 +226,8 @@ export default function Header() {
             <NavLink
               to="/academy"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -215,7 +236,8 @@ export default function Header() {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -288,23 +310,36 @@ export default function Header() {
             {isAuthenticated ? (
               <div className="relative group ml-2">
                 <button className="flex items-center gap-2 text-[#501F08] font-medium hover:text-[#3a1606] transition-colors p-1.5 rounded-lg hover:bg-[#501F08]/5">
-                  <div className="w-10 h-10 rounded-full bg-[#501F08]/10 flex items-center justify-center">
-                    <img
-                      src={user?.profile || null}
-                      alt="Profile"
-                      className="w-full h-full object-cover rounded-full"
-                    />
+                  <div className="w-10 h-10 rounded-full bg-[#501F08] flex items-center justify-center text-white text-sm font-bold shadow-inner overflow-hidden">
+                    {user?.profile ? (
+                      <img
+                        src={user?.profile}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      getInitials(user?.name)
+                    )}
                   </div>
-                  <span className="max-w-[100px] truncate">{user?.name || "User"}</span>
+                  <span className="max-w-[100px] truncate">
+                    {user?.name || "User"}
+                  </span>
                 </button>
 
                 {/* User Dropdown */}
                 <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
                   <div className="p-3 border-b border-gray-100 bg-gray-50/50">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{user?.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">
+                      {user?.name}
+                    </p>
+                    <p className="text-xs text-gray-500 truncate">
+                      {user?.email}
+                    </p>
                   </div>
-                  <Link to="/profile" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
                     My Profile
                   </Link>
                   <button
@@ -356,11 +391,21 @@ export default function Header() {
               {/* User Info Mobile */}
               {isAuthenticated && (
                 <div className="flex items-center gap-3 py-3 border-b mb-2">
-                  <div className="w-10 h-10 rounded-full bg-[#501F08]/10 flex items-center justify-center text-[#501F08]">
-                    <User className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-full bg-[#501F08] flex items-center justify-center text-white font-bold shadow-md overflow-hidden">
+                    {user?.profile ? (
+                      <img
+                        src={user?.profile}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      getInitials(user?.name)
+                    )}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">{user?.name || "User"}</p>
+                    <p className="font-semibold text-gray-900">
+                      {user?.name || "User"}
+                    </p>
                     <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
                 </div>
@@ -370,7 +415,8 @@ export default function Header() {
                 to={APP_ROUTES.HOME}
                 end
                 className={({ isActive }) =>
-                  `hover:text-[#501F08] py-2.5 border-b text-sm ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-[#501F08] py-2.5 border-b text-sm ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -386,18 +432,21 @@ export default function Header() {
                 >
                   <span>COLLECTIONS</span>
                   <svg
-                    className={`w-4 h-4 transition-transform duration-300 ${mobileProductsOpen ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 transition-transform duration-300 ${mobileProductsOpen ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
                 {mobileProductsOpen && (
                   <div className="mt-2 mb-3 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 overflow-hidden">
-
                     {/* Scrollable Collections */}
                     <div className="max-h-64 overflow-y-auto custom-scrollbar-mobile p-2">
                       {collections && collections.length > 0 ? (
@@ -437,7 +486,11 @@ export default function Header() {
                                 strokeWidth="2"
                                 viewBox="0 0 24 24"
                               >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M9 5l7 7-7 7"
+                                />
                               </svg>
                             </div>
                           </Link>
@@ -445,11 +498,23 @@ export default function Header() {
                       ) : (
                         <div className="px-4 py-6 text-center">
                           <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gray-100 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                            <svg
+                              className="w-6 h-6 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                              />
                             </svg>
                           </div>
-                          <p className="text-xs text-gray-500 font-medium">No collections available</p>
+                          <p className="text-xs text-gray-500 font-medium">
+                            No collections available
+                          </p>
                         </div>
                       )}
                     </div>
@@ -485,7 +550,8 @@ export default function Header() {
               <NavLink
                 to="/academy"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -495,7 +561,8 @@ export default function Header() {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}

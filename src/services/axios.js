@@ -73,12 +73,12 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    // Log successful response for debugging
-    console.log("✅ ~ API Response Success:", {
-      url: response.config.url,
-      status: response.status,
-      data: response.data,
-    });
+    // // Log successful response for debugging
+    // console.log("✅ ~ API Response Success:", {
+    //   url: response.config.url,
+    //   status: response.status,
+    //   data: response.data,
+    // });
 
     // Handle logical errors where status is 200 but backend returns status: false
     // Use the global toaster for this error
@@ -86,7 +86,22 @@ api.interceptors.response.use(
       console.warn("⚠️ ~ Logical API Error:", response.data);
       const errorMessage = response.data.message || "Operation failed";
 
-      if (!response.config?.skipToast) {
+      const isDeactivated = errorMessage.toLowerCase().includes("deactivated") ||
+        errorMessage.toLowerCase().includes("blocked") ||
+        errorMessage.toLowerCase().includes("disabled") ||
+        errorMessage.toLowerCase().includes("inactive");
+
+      if (isDeactivated) {
+        toastEvents.error("Your account has been deactivated. Please contact support.", { title: "Account Blocked" });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user");
+
+        const currentPath = window.location.pathname;
+        if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
+          window.location.href = "/login";
+        }
+      } else if (!response.config?.skipToast) {
         toastEvents.error(errorMessage, { title: "Error" });
       }
 
@@ -140,10 +155,30 @@ api.interceptors.response.use(
     if (error.response) {
       const { status } = error.response;
 
-      if (status === 401) {
-        // Handle unauthorized access
-        console.warn("⚠️ ~ 401 Unauthorized - Clearing tokens");
+      const responseData = error.response?.data || {};
+      const fullResponseString = JSON.stringify(responseData).toLowerCase();
 
+      const isDeactivated = fullResponseString.includes("deactivated") ||
+        fullResponseString.includes("blocked") ||
+        fullResponseString.includes("disabled") ||
+        fullResponseString.includes("inactive") ||
+        (fullResponseString.includes("internal server error") && error.config?.url?.includes("/auth/getProfile"));
+
+      if (isDeactivated) {
+        toastEvents.error("Your account has been deactivated. Please contact support.", { title: "Account Blocked" });
+
+        // Clear all local storage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user");
+
+        // Only redirect to login if not already on login/register pages
+        const currentPath = window.location.pathname;
+        if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
+          window.location.href = "/login";
+        }
+      } else if (status === 401 || status === 403) {
+        // Handle other unauthorized or forbidden access
         // Check which endpoint caused the 401
         if (error.config?.url?.includes("/auth/create-profile")) {
           // Registration failed - clear OTP token
@@ -156,10 +191,7 @@ api.interceptors.response.use(
 
           // Only redirect to login if not already on login/register pages
           const currentPath = window.location.pathname;
-          if (
-            !currentPath.includes("/login") &&
-            !currentPath.includes("/register")
-          ) {
+          if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
             window.location.href = "/login";
           }
         }

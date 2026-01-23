@@ -55,18 +55,25 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
     try {
-      // Make the API call - the axios interceptor will handle the token
+      const currentOtpToken = localStorage.getItem("otpVerificationToken");
       const response = await authApi.registerUser(userData);
 
-      // Clear the OTP token after successful registration
-      localStorage.removeItem("otpVerificationToken");
+      const authData = response.data?.data?.authentication || response.data?.authentication;
 
-      // Auto-login if token is present
-      if (response.data?.authentication?.accessToken) {
-        localStorage.setItem("accessToken", response.data.authentication.accessToken);
-        localStorage.setItem("refreshToken", response.data.authentication.refreshToken);
-        localStorage.setItem("user", JSON.stringify(response.data.data || response.data));
+      if (authData?.accessToken) {
+        localStorage.setItem("accessToken", authData.accessToken);
+        localStorage.setItem("refreshToken", authData.refreshToken);
+        const userToStore = response.data.data || response.data;
+        localStorage.setItem("user", JSON.stringify(userToStore));
+      } else if (currentOtpToken) {
+        localStorage.setItem("accessToken", currentOtpToken);
+        localStorage.setItem("refreshToken", currentOtpToken);
+        const userToStore = response.data.data || response.data;
+        localStorage.setItem("user", JSON.stringify(userToStore));
       }
+
+      // Clear the OTP token after successful registration and promotion
+      localStorage.removeItem("otpVerificationToken");
 
       return response.data;
     } catch (error) {
@@ -155,8 +162,7 @@ export const getProfile = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await authApi.getUserProfile();
-      console.log("🚀 ~ res:", res)
-      localStorage.setItem("user", JSON.stringify(res.data));
+      localStorage.setItem("user", JSON.stringify(res.data.data || res.data));
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -255,8 +261,18 @@ export const setMainAddress = createAsyncThunk(
 );
 
 // Initial state
+const getInitialUser = () => {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.data && !user.name) return user.data; // Handle nested response structure
+    return user;
+  } catch (e) {
+    return null;
+  }
+};
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: getInitialUser(),
   accessToken: localStorage.getItem("accessToken") || null,
   refreshToken: localStorage.getItem("refreshToken") || null,
   isAuthenticated: !!localStorage.getItem("accessToken"),
@@ -354,10 +370,15 @@ const authSlice = createSlice({
         state.registerSuccess = true;
 
         // Auto-login updates
-        if (action.payload.authentication?.accessToken) {
+        const authData = action.payload?.data?.authentication || action.payload?.authentication;
+        const accessToken = authData?.accessToken || localStorage.getItem("accessToken");
+        const refreshToken = authData?.refreshToken || localStorage.getItem("refreshToken");
+
+        if (accessToken) {
           state.isAuthenticated = true;
-          state.accessToken = action.payload.authentication.accessToken;
-          state.refreshToken = action.payload.authentication.refreshToken;
+          state.accessToken = accessToken;
+          state.refreshToken = refreshToken;
+          state.user = action.payload.data || action.payload;
         }
 
         state.message =
@@ -381,6 +402,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.accessToken = action.payload.data.authentication.accessToken;
         state.refreshToken = action.payload.data.authentication.refreshToken;
+        state.user = action.payload.data;
         state.message = action.payload.message || "Login successful!";
       })
       .addCase(reqLogin.rejected, (state, action) => {
@@ -490,8 +512,8 @@ const authSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.profileLoading = false;
-        // action.payload is already res.data from the thunk
-        state.user = action.payload?.data
+        // Handle both nested (.data) and flat response structures
+        state.user = action.payload?.data || action.payload;
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.profileLoading = false;
