@@ -284,7 +284,7 @@ export default function ManageAddress() {
                                         </button>
                                         <button
                                             onClick={() => handleDelete(address.id)}
-                                            className="p-2.5 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-xl transition-all"
+                                            className="p-2.5 bg-red-50 text-red-500 rounded-xl transition-all"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </button>

@@ -21,6 +21,10 @@ body {
   }
 }
 
+button {
+  cursor: pointer;
+}
+
 .animate-xmarquee {
   animation: xmarquee 18s linear infinite;
 }

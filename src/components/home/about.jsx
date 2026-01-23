@@ -8,18 +8,18 @@ const About = () => {
     {
       icon: <Sparkles className="w-6 h-6" />,
       title: "Premium Quality",
-      description: "Handpicked products for exceptional results"
+      description: "Handpicked products for exceptional results",
     },
     {
       icon: <Award className="w-6 h-6" />,
       title: "Expert Crafted",
-      description: "Professional-grade nail care solutions"
+      description: "Professional-grade nail care solutions",
     },
     {
       icon: <Heart className="w-6 h-6" />,
       title: "Customer Love",
-      description: "Trusted by thousands of beauty enthusiasts"
-    }
+      description: "Trusted by thousands of beauty enthusiasts",
+    },
   ];
 
   return (
@@ -36,7 +36,9 @@ const About = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#501F08]/10 rounded-full border border-[#501F08]/20">
               <Sparkles className="w-4 h-4 text-[#501F08]" />
-              <span className="text-sm font-semibold text-[#501F08]">Premium Nail Care Brand</span>
+              <span className="text-sm font-semibold text-[#501F08]">
+                Premium Nail Care Brand
+              </span>
             </div>
 
             {/* Brand Title */}
@@ -53,10 +55,13 @@ const About = () => {
             {/* Description */}
             <div className="space-y-4">
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Elevating beauty through premium nail artistry and professional care. We bring luxury, creativity, and confidence to every detail.
+                Elevating beauty through premium nail artistry and professional
+                care. We bring luxury, creativity, and confidence to every
+                detail.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Discover a world where innovation meets style, and every nail tells a story of perfection, passion, and bold self-expression.
+                Discover a world where innovation meets style, and every nail
+                tells a story of perfection, passion, and bold self-expression.
               </p>
             </div>
 
@@ -87,9 +92,10 @@ const About = () => {
               </Link>
               <Link
                 to="/academy"
-                className="px-8 py-3.5 bg-white text-[#501F08] rounded-xl font-semibold border-2 border-[#501F08] hover:bg-[#501F08] hover:text-white transition-all"
+                className="relative group px-8 py-3 overflow-hidden rounded-xl bg-transparent border-2 border-[#501F08] text-[#501F08] font-semibold transition-all duration-300 hover:text-white"
               >
-                Learn Nail Art
+                <span className="relative z-10">Learn Nail Art</span>
+                <div className="absolute inset-0 bg-[#501F08] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </Link>
             </div>
           </div>
@@ -127,7 +133,8 @@ const About = () => {
       {/* Animation Keyframes */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0px);
           }
           50% {
