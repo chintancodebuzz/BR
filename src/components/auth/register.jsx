@@ -46,14 +46,17 @@ const Register = () => {
       .min(8, "Password must be at least 8 characters")
       .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
       .matches(/\d/, "Password must contain at least one number")
-      .matches(/[!@#$%^&*]/, "Password must contain at least one special character")
+      .matches(
+        /[!@#$%^&*]/,
+        "Password must contain at least one special character",
+      )
       .required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
     acceptTerms: Yup.boolean().oneOf(
       [true],
-      "You must accept the terms and conditions"
+      "You must accept the terms and conditions",
     ),
   });
 
@@ -96,19 +99,15 @@ const Register = () => {
       try {
         const result = await dispatch(register(registrationData)).unwrap();
 
-        if (result.error) {
-          // Handled by global error toaster
-          return;
+        if (result.status) {
+          formik.resetForm();
+          setIsEmailVerified(false);
+          // Redux thunk handles token and user storage
+          localStorage.removeItem("otpVerificationToken");
+          navigate(APP_ROUTES.HOME);
         }
-
-        // Global success toast handles the success message
-
-        formik.resetForm();
-        setIsEmailVerified(false);
-        localStorage.removeItem("otpVerificationToken");
-        navigate(APP_ROUTES.HOME);
       } catch (error) {
-        // Handled by global error toaster
+        throw error; // Handled by global error toaster
       } finally {
         setIsLoading(false);
       }
@@ -132,9 +131,7 @@ const Register = () => {
     setIsSendingOTP(true);
 
     try {
-      await dispatch(
-        reqVerifyEmail({ email: formik.values.email })
-      ).unwrap();
+      await dispatch(reqVerifyEmail({ email: formik.values.email })).unwrap();
 
       // Global toaster handles success message
 
@@ -228,21 +225,26 @@ const Register = () => {
                   <div className="relative group">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <User className={`h-5 w-5 ${formik.touched.name && formik.errors.name ? "text-red-400" : "text-gray-400"}`} />
+                        <User
+                          className={`h-5 w-5 ${formik.touched.name && formik.errors.name ? "text-red-400" : "text-gray-400"}`}
+                        />
                       </div>
                       <input
                         type="text"
                         name="name"
                         {...formik.getFieldProps("name")}
-                        className={`w-full pl-10 pr-3 py-3 bg-white border ${formik.touched.name && formik.errors.name
-                          ? "border-red-300 focus:ring-red-200"
-                          : "border-gray-300 focus:ring-[#501F08]"
-                          } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                        className={`w-full pl-10 pr-3 py-3 bg-white border ${
+                          formik.touched.name && formik.errors.name
+                            ? "border-red-300 focus:ring-red-200"
+                            : "border-gray-300 focus:ring-[#501F08]"
+                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                         placeholder="Full name"
                       />
                     </div>
                     {formik.touched.name && formik.errors.name && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.name}</p>
+                      <p className="text-red-500 text-xs mt-1 ml-1">
+                        {formik.errors.name}
+                      </p>
                     )}
                   </div>
 
@@ -250,18 +252,24 @@ const Register = () => {
                   <div className="relative group">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Mail className={`h-5 w-5 ${formik.touched.email && formik.errors.email ? "text-red-400" : "text-gray-400"}`} />
+                        <Mail
+                          className={`h-5 w-5 ${formik.touched.email && formik.errors.email ? "text-red-400" : "text-gray-400"}`}
+                        />
                       </div>
                       <input
                         type="email"
                         name="email"
                         {...formik.getFieldProps("email")}
                         disabled={isEmailVerified}
-                        className={`w-full pl-10 pr-3 py-3 bg-white border ${formik.touched.email && formik.errors.email
-                          ? "border-red-300 focus:ring-red-200"
-                          : isEmailVerified ? "border-green-200" : "border-gray-300 focus:ring-[#501F08]"
-                          } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm ${isEmailVerified ? "bg-green-50" : ""
-                          }`}
+                        className={`w-full pl-10 pr-3 py-3 bg-white border ${
+                          formik.touched.email && formik.errors.email
+                            ? "border-red-300 focus:ring-red-200"
+                            : isEmailVerified
+                              ? "border-green-200"
+                              : "border-gray-300 focus:ring-[#501F08]"
+                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm ${
+                          isEmailVerified ? "bg-green-50" : ""
+                        }`}
                         placeholder="Email address"
                       />
 
@@ -279,10 +287,11 @@ const Register = () => {
                             type="button"
                             onClick={handleSendOTP}
                             disabled={!formik.values.email || isSendingOTP}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 cursor-pointer ${formik.values.email && !isSendingOTP
-                              ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-md"
-                              : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                              }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 cursor-pointer ${
+                              formik.values.email && !isSendingOTP
+                                ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-md"
+                                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                            }`}
                           >
                             {isSendingOTP ? (
                               <div className="flex items-center">
@@ -297,7 +306,9 @@ const Register = () => {
                       </div>
                     </div>
                     {formik.touched.email && formik.errors.email && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.email}</p>
+                      <p className="text-red-500 text-xs mt-1 ml-1">
+                        {formik.errors.email}
+                      </p>
                     )}
                     {isEmailVerified && (
                       <p className="text-xs text-green-600 mt-1 ml-3">
@@ -310,21 +321,26 @@ const Register = () => {
                   <div className="relative group">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Phone className={`h-5 w-5 ${formik.touched.phoneNo && formik.errors.phoneNo ? "text-red-400" : "text-gray-400"}`} />
+                        <Phone
+                          className={`h-5 w-5 ${formik.touched.phoneNo && formik.errors.phoneNo ? "text-red-400" : "text-gray-400"}`}
+                        />
                       </div>
                       <input
                         type="tel"
                         name="phoneNo"
                         {...formik.getFieldProps("phoneNo")}
-                        className={`w-full pl-10 pr-3 py-3 bg-white border ${formik.touched.phoneNo && formik.errors.phoneNo
-                          ? "border-red-300 focus:ring-red-200"
-                          : "border-gray-300 focus:ring-[#501F08]"
-                          } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                        className={`w-full pl-10 pr-3 py-3 bg-white border ${
+                          formik.touched.phoneNo && formik.errors.phoneNo
+                            ? "border-red-300 focus:ring-red-200"
+                            : "border-gray-300 focus:ring-[#501F08]"
+                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                         placeholder="Mobile Number"
                       />
                     </div>
                     {formik.touched.phoneNo && formik.errors.phoneNo && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.phoneNo}</p>
+                      <p className="text-red-500 text-xs mt-1 ml-1">
+                        {formik.errors.phoneNo}
+                      </p>
                     )}
                   </div>
 
@@ -332,16 +348,19 @@ const Register = () => {
                   <div className="relative group">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Lock className={`h-5 w-5 ${formik.touched.password && formik.errors.password ? "text-red-400" : "text-gray-400"}`} />
+                        <Lock
+                          className={`h-5 w-5 ${formik.touched.password && formik.errors.password ? "text-red-400" : "text-gray-400"}`}
+                        />
                       </div>
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
                         {...formik.getFieldProps("password")}
-                        className={`w-full pl-10 pr-10 py-3 bg-white border ${formik.touched.password && formik.errors.password
-                          ? "border-red-300 focus:ring-red-200"
-                          : "border-gray-300 focus:ring-[#501F08]"
-                          } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                        className={`w-full pl-10 pr-10 py-3 bg-white border ${
+                          formik.touched.password && formik.errors.password
+                            ? "border-red-300 focus:ring-red-200"
+                            : "border-gray-300 focus:ring-[#501F08]"
+                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                         placeholder="Password"
                       />
                       <button
@@ -357,7 +376,9 @@ const Register = () => {
                       </button>
                     </div>
                     {formik.touched.password && formik.errors.password && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.password}</p>
+                      <p className="text-red-500 text-xs mt-1 ml-1">
+                        {formik.errors.password}
+                      </p>
                     )}
                   </div>
 
@@ -366,12 +387,14 @@ const Register = () => {
                     {passwordRequirements.map((req, idx) => (
                       <div key={idx} className="flex items-center">
                         <div
-                          className={`w-2 h-2 rounded-full mr-2 ${req.met ? "bg-green-500" : "bg-gray-300"
-                            }`}
+                          className={`w-2 h-2 rounded-full mr-2 ${
+                            req.met ? "bg-green-500" : "bg-gray-300"
+                          }`}
                         ></div>
                         <span
-                          className={`text-xs ${req.met ? "text-green-600" : "text-gray-500"
-                            }`}
+                          className={`text-xs ${
+                            req.met ? "text-green-600" : "text-gray-500"
+                          }`}
                         >
                           {req.text}
                         </span>
@@ -383,16 +406,20 @@ const Register = () => {
                   <div className="relative group">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Lock className={`h-5 w-5 ${formik.touched.confirmPassword && formik.errors.confirmPassword ? "text-red-400" : "text-gray-400"}`} />
+                        <Lock
+                          className={`h-5 w-5 ${formik.touched.confirmPassword && formik.errors.confirmPassword ? "text-red-400" : "text-gray-400"}`}
+                        />
                       </div>
                       <input
                         type={showConfirmPassword ? "text" : "password"}
                         name="confirmPassword"
                         {...formik.getFieldProps("confirmPassword")}
-                        className={`w-full pl-10 pr-10 py-3 bg-white border ${formik.touched.confirmPassword && formik.errors.confirmPassword
-                          ? "border-red-300 focus:ring-red-200"
-                          : "border-gray-300 focus:ring-[#501F08]"
-                          } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                        className={`w-full pl-10 pr-10 py-3 bg-white border ${
+                          formik.touched.confirmPassword &&
+                          formik.errors.confirmPassword
+                            ? "border-red-300 focus:ring-red-200"
+                            : "border-gray-300 focus:ring-[#501F08]"
+                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                         placeholder="Confirm password"
                       />
                       <button
@@ -409,9 +436,12 @@ const Register = () => {
                         )}
                       </button>
                     </div>
-                    {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.confirmPassword}</p>
-                    )}
+                    {formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword && (
+                        <p className="text-red-500 text-xs mt-1 ml-1">
+                          {formik.errors.confirmPassword}
+                        </p>
+                      )}
                   </div>
 
                   {/* Terms */}
@@ -424,15 +454,16 @@ const Register = () => {
                         checked={formik.values.acceptTerms}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`h-4 w-4 text-[#501F08] focus:ring-[#501F08] border-gray-300 rounded flex-shrink-0 cursor-pointer ${formik.touched.acceptTerms && formik.errors.acceptTerms ? "border-red-500 ring-1 ring-red-500" : ""
-                          }`}
+                        className={`h-4 w-4 text-[#501F08] focus:ring-[#501F08] border-gray-300 rounded flex-shrink-0 cursor-pointer ${
+                          formik.touched.acceptTerms &&
+                          formik.errors.acceptTerms
+                            ? "border-red-500 ring-1 ring-red-500"
+                            : ""
+                        }`}
                       />
                     </div>
                     <div className="ml-2 text-xs">
-                      <label
-                        htmlFor="accept-terms"
-                        className="text-gray-700"
-                      >
+                      <label htmlFor="accept-terms" className="text-gray-700">
                         I agree to the{" "}
                         <Link
                           to="/terms"
@@ -448,9 +479,12 @@ const Register = () => {
                           Privacy Policy
                         </Link>
                       </label>
-                      {formik.touched.acceptTerms && formik.errors.acceptTerms && (
-                        <p className="text-red-500 text-xs mt-1">{formik.errors.acceptTerms}</p>
-                      )}
+                      {formik.touched.acceptTerms &&
+                        formik.errors.acceptTerms && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {formik.errors.acceptTerms}
+                          </p>
+                        )}
                     </div>
                   </div>
 
@@ -458,10 +492,11 @@ const Register = () => {
                   <button
                     type="submit"
                     disabled={isLoading || !isEmailVerified}
-                    className={`w-full group relative px-6 py-3.5 rounded-xl font-semibold shadow-lg transition-all duration-300 ${isEmailVerified
-                      ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-xl"
-                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      }`}
+                    className={`w-full group relative px-6 py-3.5 rounded-xl font-semibold shadow-lg transition-all duration-300 ${
+                      isEmailVerified
+                        ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-xl"
+                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
                   >
                     <div className="relative flex items-center justify-center space-x-2">
                       {isLoading ? (

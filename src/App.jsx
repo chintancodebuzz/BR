@@ -37,7 +37,10 @@ const MainLayout = () => {
   );
 };
 
+import { useAuthManager } from "./hooks/useAuthManager";
+
 function App() {
+  useAuthManager();
   return (
     <ToastProvider>
       <div className="flex flex-col min-h-screen">
