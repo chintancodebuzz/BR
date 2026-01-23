@@ -234,7 +234,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-gradient-to-br from-[#F8F2E9] via-[#EDE3D9] to-[#E2D4C9] overflow-hidden">
+      <div className="fixed inset-0 bg-[#FDFDFD] overflow-hidden">
         <BackgroundEffects />
 
         <div className="relative h-screen flex items-center justify-center p-4">
@@ -242,7 +242,7 @@ const ForgotPassword = () => {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="mx-auto w-24 h-24 mb-4 relative">
-                <div className="relative w-24 h-24 bg-gradient-to-br from-[#501F08] to-[#9e5d61] rounded-full flex items-center justify-center shadow-2xl">
+                <div className="relative w-24 h-24 bg-linear-to-br from-[#501F08] to-[#9e5d61] rounded-full flex items-center justify-center shadow-2xl">
                   <img
                     src={logo}
                     alt="BR Nails"
@@ -276,7 +276,7 @@ const ForgotPassword = () => {
               </div>
 
               {/* Security Badge */}
-              <div className="bg-gradient-to-r from-[#501F08]/5 via-[#9e5d61]/5 to-[#501F08]/5 p-4 text-center">
+              <div className="bg-linear-to-r from-[#501F08]/5 via-[#9e5d61]/5 to-[#501F08]/5 p-4 text-center">
                 <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
                   <Shield className="w-4 h-4" />
                   <span>Secure password reset • 256-bit encryption</span>
@@ -334,25 +334,25 @@ const BackgroundEffects = () => (
   <div className="absolute inset-0 overflow-hidden">
     {/* Swirling Gradient Lines */}
     <div className="absolute top-20 left-20 w-[500px] h-[500px] opacity-5">
-      <div className="w-full h-full border-[8px] border-transparent border-t-[#501F08] border-r-[#9e5d61] rounded-full animate-spin-slow"></div>
+      <div className="w-full h-full border-8 border-transparent border-t-[#501F08] border-r-[#9e5d61] rounded-full animate-spin-slow"></div>
     </div>
     <div className="absolute bottom-20 right-20 w-[500px] h-[500px] opacity-5">
       <div
-        className="w-full h-full border-[8px] border-transparent border-b-[#501F08] border-l-[#9e5d61] rounded-full animate-spin-slow"
+        className="w-full h-full border-8 border-transparent border-b-[#501F08] border-l-[#9e5d61] rounded-full animate-spin-slow"
         style={{ animationDirection: "reverse" }}
       ></div>
     </div>
 
     {/* Gradient Orbs */}
-    <div className="absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
-    <div className="absolute -bottom-32 -right-32 w-[400px] h-[400px] rounded-full bg-gradient-to-l from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
+    <div className="absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full bg-linear-to-r from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
+    <div className="absolute -bottom-32 -right-32 w-[400px] h-[400px] rounded-full bg-linear-to-l from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
 
     {/* Nail Polish Bottles */}
     <div className="absolute top-10 left-10 w-24 h-36 rotate-12 opacity-5">
-      <div className="w-10 h-36 bg-gradient-to-b from-[#501F08] to-[#9e5d61] rounded-t-lg mx-auto"></div>
+      <div className="w-10 h-36 bg-linear-to-b from-[#501F08] to-[#9e5d61] rounded-t-lg mx-auto"></div>
     </div>
     <div className="absolute bottom-10 right-10 w-24 h-36 -rotate-12 opacity-5">
-      <div className="w-10 h-36 bg-gradient-to-b from-[#9e5d61] to-[#501F08] rounded-t-lg mx-auto"></div>
+      <div className="w-10 h-36 bg-linear-to-b from-[#9e5d61] to-[#501F08] rounded-t-lg mx-auto"></div>
     </div>
   </div>
 );

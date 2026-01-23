@@ -74,7 +74,7 @@ export default function ProductDetail() {
         if (!user) return navigate('/login');
         try {
             await dispatch(addToCart(product.id)).unwrap();
-            toast.success("Added to bag");
+            toast.success("Added to cart");
         } catch (err) {
             toast.error(err?.message || "Failed to add to cart");
         }
@@ -231,7 +231,7 @@ export default function ProductDetail() {
                                 className="w-full bg-[#501F08] text-white py-5 rounded-2xl font-black text-[11px] tracking-[0.2em] shadow-[0_20px_40px_rgba(80,31,8,0.2)] hover:shadow-[0_25px_50px_rgba(80,31,8,0.3)] transition-all flex items-center justify-center gap-3 uppercase"
                             >
                                 <ShoppingCart className="w-5 h-5" />
-                                Add to Bag
+                                Add to Cart
                             </button>
                             <button className="w-full bg-white text-[#501F08] border-2 border-[#501F08] py-5 rounded-2xl font-black text-[11px] tracking-[0.2em] hover:bg-[#501F08] hover:white transition-all uppercase flex items-center justify-center gap-3">
                                 Buy Masterpiece Now
@@ -244,7 +244,7 @@ export default function ProductDetail() {
                                 <div className="p-3 bg-green-50 rounded-full text-green-600">
                                     <Truck className="w-5 h-5" />
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Complimentary Delivery</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Free Delivery</span>
                             </div>
                             <div className="flex flex-col items-center text-center gap-2">
                                 <div className="p-3 bg-blue-50 rounded-full text-blue-600">

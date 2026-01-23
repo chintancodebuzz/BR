@@ -6,13 +6,17 @@ import { getProfile, logoutUser } from "../../slices/authSlice";
 import { fetchCollections } from "../../slices/homeSlice";
 import { APP_ROUTES } from "../../constants/appRoutes";
 import LogoutModal from "../models/LogoutModal";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Heart, ShoppingCart } from "lucide-react";
+import { fetchCart } from "../../slices/cartSlice";
+import { fetchWishlist } from "../../slices/wishlistSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { collections } = useSelector((state) => state.home);
+  const { items: cartItems } = useSelector((state) => state.cart);
+  const { items: wishlistItems } = useSelector((state) => state.wishlist);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
@@ -21,6 +25,10 @@ export default function Header() {
   const [hideHeader, setHideHeader] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -41,8 +49,12 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    dispatch(getProfile());
-  }, []);
+    if (isAuthenticated) {
+      dispatch(getProfile());
+      dispatch(fetchCart());
+      dispatch(fetchWishlist());
+    }
+  }, [isAuthenticated, dispatch]);
 
   useEffect(() => {
     dispatch(fetchCollections());
@@ -74,11 +86,10 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-50">
       <header
-        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${
-          scrolled
-            ? "backdrop-blur-md shadow-lg top-7"
-            : "backdrop-blur-md shadow-lg top-7"
-        } `}
+        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${scrolled
+          ? "backdrop-blur-md shadow-lg top-7"
+          : "backdrop-blur-md shadow-lg top-7"
+          } `}
       >
         <div className="mx-auto px-6 md:px-12 lg:px-24 py-1 flex items-center justify-between">
           {/* Logo */}
@@ -96,8 +107,7 @@ export default function Header() {
               to={APP_ROUTES.HOME}
               end
               className={({ isActive }) =>
-                `hover:text-[#501F08] relative transition-colors ${
-                  isActive ? activeClass : "after:hidden"
+                `hover:text-[#501F08] relative transition-colors ${isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -226,8 +236,7 @@ export default function Header() {
             <NavLink
               to="/academy"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${
-                  isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -236,8 +245,7 @@ export default function Header() {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${
-                  isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -264,45 +272,38 @@ export default function Header() {
             </Link>
 
             {/* Cart & Wishlist Icons */}
-            <div className="flex items-center gap-3 ml-2">
+            <div className="flex items-center gap-2 ml-2">
               {/* Wishlist */}
               <Link
                 to="/wishlist"
-                className="relative p-2 hover:bg-[#501F08]/5 rounded-lg transition-colors group"
+                className="group relative p-2.5 text-gray-700 hover:text-[#501F08] bg-gray-50/50 hover:bg-[#501F08]/10 rounded-2xl border border-gray-100 hover:border-[#501F08]/20 transition-all active:scale-95 shadow-sm"
+                aria-label="Wishlist"
               >
-                <svg
-                  className="w-6 h-6 text-gray-700 group-hover:text-[#501F08] transition-colors"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+                <Heart
+                  size={20}
+                  className={`transition-all duration-300 ${wishlistItems?.length > 0 ? "fill-[#501F08] text-[#501F08]" : ""}`}
+                />
+                {wishlistItems?.length > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#501F08] text-[9px] font-bold text-white border-2 border-white shadow-md group-hover:scale-110 transition-transform">
+                    {wishlistItems.length}
+                  </span>
+                )}
               </Link>
 
               {/* Cart */}
               <Link
                 to="/cart"
-                className="relative p-2 hover:bg-[#501F08]/5 rounded-lg transition-colors group"
+                className="group relative p-2.5 text-gray-700 hover:text-[#501F08] bg-gray-50/50 hover:bg-[#501F08]/10 rounded-2xl border border-gray-100 hover:border-[#501F08]/20 transition-all active:scale-95 shadow-sm"
+                aria-label="Cart"
               >
-                <svg
-                  className="w-6 h-6 text-gray-700 group-hover:text-[#501F08] transition-colors"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
+                <ShoppingCart
+                  size={20}
+                />
+                {cartItems?.length > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#501F08] text-[9px] font-bold text-white border-2 border-white shadow-md group-hover:scale-110 transition-transform">
+                    {cartItems.length}
+                  </span>
+                )}
               </Link>
             </div>
 
@@ -354,22 +355,12 @@ export default function Header() {
             ) : (
               <Link
                 to={APP_ROUTES.LOGIN}
-                className="ml-2 p-2 text-[#501F08] rounded-full transition hover:bg-[#501F08]/5"
+                className="ml-2 group p-2 text-gray-600 hover:text-[#501F08] hover:bg-[#501F08]/5 rounded-full transition-all"
                 aria-label="Login"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+                <User
+                  size={22}
+                />
               </Link>
             )}
           </div>
@@ -415,8 +406,7 @@ export default function Header() {
                 to={APP_ROUTES.HOME}
                 end
                 className={({ isActive }) =>
-                  `hover:text-[#501F08] py-2.5 border-b text-sm ${
-                    isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-[#501F08] py-2.5 border-b text-sm ${isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -550,8 +540,7 @@ export default function Header() {
               <NavLink
                 to="/academy"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${
-                    isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -561,8 +550,7 @@ export default function Header() {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${
-                    isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -600,23 +588,11 @@ export default function Header() {
               ) : (
                 <Link
                   to={APP_ROUTES.LOGIN}
-                  className="flex items-center justify-center space-x-2 hover:text-[#501F08] py-2.5 border-t pt-4"
+                  className="flex items-center justify-center space-x-2 hover:text-[#501F08] py-4 bg-[#501F08]/5 rounded-xl transition-all duration-300 group border border-transparent hover:border-[#501F08]/20 mt-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  <span>LOGIN</span>
+                  <User size={20} className="text-gray-600 group-hover:text-[#501F08]" />
+                  <span className="font-semibold text-gray-700 group-hover:text-[#501F08]">LOGIN</span>
                 </Link>
               )}
             </div>

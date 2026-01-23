@@ -66,7 +66,7 @@ const Login = () => {
   }, [dispatch]);
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-[#F8F2E9] via-[#EDE3D9] to-[#E2D4C9] overflow-hidden">
+    <div className="fixed inset-0 bg-[#FDFDFD] overflow-hidden">
       {/* Animated Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Swirling linear Lines */}
@@ -81,15 +81,15 @@ const Login = () => {
         </div>
 
         {/* linear Orbs */}
-        <div className="absolute -top-40 -left-40 w-125 h-125 rounded-full bg-gradient-to-r from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
-        <div className="absolute -bottom-40 -right-40 w-125 h-125 rounded-full bg-gradient-to-l from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
+        <div className="absolute -top-40 -left-40 w-125 h-125 rounded-full bg-linear-to-r from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
+        <div className="absolute -bottom-40 -right-40 w-125 h-125 rounded-full bg-linear-to-l from-[#501F08]/10 to-[#9e5d61]/10 blur-3xl"></div>
 
         {/* Nail Polish Bottles */}
         <div className="absolute top-1/3 -left-16 w-32 h-48 rotate-12 opacity-5">
-          <div className="w-12 h-48 bg-gradient-to-b from-[#501F08] to-[#9e5d61] rounded-t-lg mx-auto"></div>
+          <div className="w-12 h-48 bg-linear-to-b from-[#501F08] to-[#9e5d61] rounded-t-lg mx-auto"></div>
         </div>
         <div className="absolute bottom-1/3 -right-16 w-32 h-48 -rotate-12 opacity-5">
-          <div className="w-12 h-48 bg-gradient-to-b from-[#9e5d61] to-[#501F08] rounded-t-lg mx-auto"></div>
+          <div className="w-12 h-48 bg-linear-to-b from-[#9e5d61] to-[#501F08] rounded-t-lg mx-auto"></div>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ const Login = () => {
           {/* Logo Header */}
           <div className="text-center mb-8">
             <div className="mx-auto w-24 h-24 mb-4 relative">
-              <div className="relative w-24 h-24 bg-gradient-to-br from-[#501F08] to-[#9e5d61] rounded-full flex items-center justify-center shadow-2xl">
+              <div className="relative w-24 h-24 bg-linear-to-br from-[#501F08] to-[#9e5d61] rounded-full flex items-center justify-center shadow-2xl">
                 <img
                   src={logo}
                   alt="BR Nails"
