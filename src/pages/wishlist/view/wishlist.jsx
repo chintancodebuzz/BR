@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Heart, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
 import { fetchWishlist, removeFromWishlist } from "../../../slices/wishlistSlice";
 import { addToCart } from "../../../slices/cartSlice";
-import { ProductSkeleton } from "../../../components/common/Skeleton";
 
 export default function Wishlist() {
     const dispatch = useDispatch();
@@ -29,14 +28,16 @@ export default function Wishlist() {
 
     if (!user) {
         return (
-            <div className="min-h-screen bg-[#FDFDFD] flex items-center justify-center px-6">
-                <div className="text-center max-w-sm bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                    <Heart className="w-12 h-12 text-[#501F08]/20 mx-auto mb-6" />
-                    <h2 className="text-2xl font-bold text-[#501F08] mb-2 uppercase">Login Required</h2>
-                    <p className="text-gray-500 mb-8 text-sm italic">Please sign in to view your saved items.</p>
+            <div className="min-h-screen bg-[#FDFDFD] flex items-center justify-center p-6 text-center">
+                <div className="max-w-md w-full bg-white p-10 rounded-[32px] shadow-xl border border-gray-100">
+                    <div className="w-20 h-20 bg-[#501F08]/5 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Heart className="w-10 h-10 text-[#501F08]" />
+                    </div>
+                    <h2 className="text-3xl font-black text-[#501F08] mb-4 uppercase tracking-tight">Login Required</h2>
+                    <p className="text-gray-500 mb-8 font-medium">Please sign in to view your saved masterpieces.</p>
                     <button
                         onClick={() => navigate('/login')}
-                        className="w-full py-3 bg-[#501F08] text-white rounded-xl font-bold text-xs tracking-widest hover:bg-[#3a1606] transition-all uppercase"
+                        className="w-full py-4 bg-[#501F08] text-white rounded-2xl font-black text-xs tracking-[0.2em] hover:bg-[#3a1606] transition-all uppercase shadow-lg"
                     >
                         Login Now
                     </button>
@@ -46,77 +47,89 @@ export default function Wishlist() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FDFDFD]">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
-                <div className="mb-10">
-                    <h1 className="text-3xl font-black text-[#501F08] uppercase tracking-tight mb-1">My Wishlist</h1>
-                    <p className="text-xs font-bold text-[#A87453] uppercase  opacity-70">
-                        {items.length} {items.length === 1 ? 'Item' : 'Items'} Saved
-                    </p>
+        <div className="min-h-screen bg-[#FDFDFD] pb-24">
+            <div className="mx-auto px-6 md:px-12 lg:px-24 py-12">
+                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-black text-[#501F08] mb-1">My Wishlist</h1>
+                        <p className="text-sm font-bold text-[#A87453] opacity-60">
+                            {items.length} {items.length === 1 ? 'Masterpiece' : 'Masterpieces'} curated
+                        </p>
+                    </div>
                 </div>
 
                 {loading ? (
-                    <ProductSkeleton count={4} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className="aspect-4/5 bg-white/50 rounded-[32px] border border-gray-100 animate-pulse" />
+                        ))}
+                    </div>
                 ) : items.length === 0 ? (
-                    <div className="text-center py-24 bg-white rounded-2xl border border-gray-50 flex flex-col items-center">
-                        <Heart className="w-12 h-12 text-[#501F08]/20 mb-6" />
-                        <h2 className="text-xl font-bold text-[#501F08] mb-2 uppercase">Wishlist Empty</h2>
-                        <p className="text-gray-400 mb-8 text-sm italic">You haven't saved any masterpieces yet.</p>
+                    <div className="text-center py-32 bg-white rounded-[40px] border border-gray-100 shadow-xl max-w-2xl mx-auto mt-12 flex flex-col items-center">
+                        <div className="w-24 h-24 bg-[#501F08]/5 rounded-full flex items-center justify-center mb-8 animate-float">
+                            <Heart className="w-10 h-10 text-[#501F08] opacity-30" />
+                        </div>
+                        <h2 className="text-3xl font-black text-[#501F08] mb-4 uppercase tracking-tight">Wishlist Empty</h2>
+                        <p className="text-gray-500 mb-10 text-lg font-medium italic">Save items you love to find them easily here.</p>
                         <button
                             onClick={() => navigate('/products')}
-                            className="px-8 py-3 bg-[#501F08] text-white rounded-xl font-bold text-xs tracking-widest hover:bg-[#3a1606] transition-all uppercase flex items-center gap-2"
+                            className="px-12 py-4 bg-[#501F08] text-white rounded-2xl font-black text-xs tracking-[0.2em] hover:bg-[#3a1606] transition-all hover:shadow-2xl uppercase flex items-center gap-3 group"
                         >
                             Explore Collection
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {items.map((item) => (
                             <div
                                 key={item._id || item.id}
-                                className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-sm transition-all duration-300 group flex flex-col h-full"
+                                className="group bg-white rounded-[32px] border border-gray-100 overflow-hidden hover:shadow-2xl hover:border-[#501F08]/10 transition-all duration-500 flex flex-col h-full relative"
                             >
-                                <div className="relative aspect-square overflow-hidden bg-gray-50">
+                                <div className="relative aspect-4/3 overflow-hidden bg-gray-50">
                                     <img
                                         src={item?.images?.[0] || item?.image || '/placeholder.jpg'}
                                         alt={item?.name}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                                     />
+                                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     <button
                                         onClick={() => handleRemove(item._id || item.id)}
-                                        className="absolute top-2 right-2 p-2 bg-white/90 rounded-full shadow-sm hover:bg-red-50 text-gray-400 hover:text-red-500 transition-all z-10"
+                                        className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl text-red-400 hover:text-red-600 hover:scale-110 transition-all duration-300 z-10"
+                                        title="Remove"
                                     >
-                                        <Trash2 className="w-4 h-4" />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
 
-                                <div className="p-4 flex flex-col flex-1">
-                                    <p className="text-[10px] font-bold text-[#A87453] uppercase mb-1 opacity-70">
-                                        {item?.collectionTitle || item?.category || 'Luxury Collection'}
+                                <div className="p-6 flex flex-col flex-1">
+                                    <p className="text-[10px] font-black text-[#A87453] uppercase tracking-[0.3em] mb-2 opacity-70">
+                                        {item?.collectionTitle || item?.category || 'Curated Luxury'}
                                     </p>
-                                    <h3 className="text-sm font-bold text-gray-900 mb-2 line-clamp-2">
+                                    <h3 className="text-base font-black text-[#1A1A1A] mb-3 line-clamp-2 leading-tight group-hover:text-[#501F08] transition-colors">
                                         {item?.name || item?.title}
                                     </h3>
 
-                                    <div className="flex items-center gap-2 mb-4 mt-auto">
-                                        <span className="text-lg font-bold text-[#501F08]">
-                                            ₹{(item?.selling_price || item?.price || 0).toLocaleString()}
-                                        </span>
-                                        {(item?.origional_price || item?.originalPrice) > (item?.selling_price || item?.price) && (
-                                            <span className="text-xs text-gray-400 line-through opacity-60">
-                                                ₹{(item?.origional_price || item?.originalPrice).toLocaleString()}
+                                    <div className="mt-auto">
+                                        <div className="flex items-center gap-2 mb-5">
+                                            <span className="text-xl font-black text-[#501F08]">
+                                                ₹{(item?.selling_price || item?.price || 0).toLocaleString()}
                                             </span>
-                                        )}
-                                    </div>
+                                            {(item?.origional_price || item?.originalPrice) > (item?.selling_price || item?.price) && (
+                                                <span className="text-xs font-bold text-gray-300 line-through">
+                                                    ₹{(item?.origional_price || item?.originalPrice).toLocaleString()}
+                                                </span>
+                                            )}
+                                        </div>
 
-                                    <button
-                                        onClick={() => handleMoveToCart(item.id || item._id, item._id || item.id)}
-                                        className="w-full bg-[#501F08]/5 text-[#501F08] hover:bg-[#501F08] hover:text-white py-2 px-4 rounded-lg font-bold text-[10px] tracking-widest transition-all flex items-center justify-center gap-2 uppercase"
-                                    >
-                                        <ShoppingCart className="w-3.5 h-3.5" />
-                                        Move to Bag
-                                    </button>
+                                        <button
+                                            onClick={() => handleMoveToCart(item.id || item._id, item._id || item.id)}
+                                            className="w-full bg-[#501F08] text-white py-4 px-4 rounded-2xl font-black text-[10px] tracking-[0.2em] hover:bg-[#3a1606] transition-all hover:shadow-xl flex items-center justify-center gap-3 uppercase group/btn"
+                                        >
+                                            <ShoppingCart size={16} className="group-hover/btn:scale-110 transition-transform" />
+                                            Move to Cart
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

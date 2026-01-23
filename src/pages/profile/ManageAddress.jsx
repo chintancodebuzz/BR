@@ -278,7 +278,7 @@ export default function ManageAddress() {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => handleEdit(address)}
-                                            className="p-2.5 hover:bg-[#FAF7F5] text-gray-400 hover:text-[#501F08] rounded-xl transition-all"
+                                            className="p-2.5 bg-[#FAF7F5]  text-[#501F08] rounded-xl transition-all"
                                         >
                                             <Edit2 className="w-4 h-4" />
                                         </button>

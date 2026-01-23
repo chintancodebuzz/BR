@@ -106,7 +106,7 @@ const Contact = () => {
   ];
 
   return (
-    <section className="relative min-h-screen bg-linear-to-br from-[#F8F2E9] via-[#EDE3D9] to-[#E2D4C9] overflow-hidden">
+    <section className="relative min-h-screen bg-[#FDFDFD] overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Abstract shapes */}

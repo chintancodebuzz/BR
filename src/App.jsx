@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import Home from "./pages/home/view/home";
 import Products from "./pages/product/view/product";
 import ProductDetail from "./pages/product/view/productDetail";
@@ -24,11 +24,14 @@ import { ToastProvider } from "./contexts/ToastContext";
 
 // Layout wrapper for pages with header/footer
 const MainLayout = () => {
+  const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
+
   return (
     <>
       <TopBar />
       <Header />
-      <main className="grow pt-19">
+      <main className={`grow pt-19 ${!isHomePage ? 'bg-[#FDFDFD]' : ''}`}>
         <Outlet />
       </main>
       <Footer />

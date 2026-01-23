@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @config "../tailwind.config.cjs";
+
 @layer base {
   body {
     @apply font-outfit;
   }
 }
+
 body {
   @apply bg-white text-gray-800;
 }
@@ -13,6 +15,7 @@ body {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -21,20 +24,25 @@ body {
 .animate-xmarquee {
   animation: xmarquee 18s linear infinite;
 }
+
 .swiper-pagination-bullet {
   background: #f6e6d6 !important;
   opacity: var(--swiper-pagination-bullet-inactive-opacity, 0.8) !important;
 }
+
 .swiper-pagination-bullet-active {
   background: #501f08 !important;
 }
+
 @keyframes float {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
+
   100% {
     transform: translateY(0px);
   }
@@ -48,29 +56,91 @@ body {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
 }
 
 .animate-skeleton {
-  background: linear-gradient(
-    90deg,
-    #f3f4f6 25%,
-    #e5e7eb 50%,
-    #f3f4f6 75%
-  );
+  background: linear-gradient(90deg,
+      #f3f4f6 25%,
+      #e5e7eb 50%,
+      #f3f4f6 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite linear;
 }
 
 .animate-skeleton-theme {
-  background: linear-gradient(
-    90deg,
-    rgba(168, 116, 83, 0.1) 25%,
-    rgba(168, 116, 83, 0.2) 50%,
-    rgba(168, 116, 83, 0.1) 75%
-  );
+  background: linear-gradient(90deg,
+      rgba(168, 116, 83, 0.1) 25%,
+      rgba(168, 116, 83, 0.2) 50%,
+      rgba(168, 116, 83, 0.1) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 2s infinite linear;
 }
+
+@keyframes premium-bounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-premium-bounce {
+  animation: premium-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDFDFD;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #501F08;
+  border-radius: 100px;
+  border: 2px solid #FDFDFD;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3d1706;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #501F08 #FDFDFD;
+}
+
+@keyframes pulse-subtle {
+
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth transitions should be applied specifically to elements using Tailwind classes like 'transition-all' */
