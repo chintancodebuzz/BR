@@ -94,7 +94,7 @@ export default function Wishlist() {
                                     />
                                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     <button
-                                        onClick={() => handleRemove(item._id || item.id)}
+                                        onClick={() => handleRemove(item?.wishlistId)}
                                         className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl text-red-400 hover:text-red-600 hover:scale-110 transition-all duration-300 z-10"
                                         title="Remove"
                                     >
@@ -123,7 +123,7 @@ export default function Wishlist() {
                                         </div>
 
                                         <button
-                                            onClick={() => handleMoveToCart(item.id || item._id, item._id || item.id)}
+                                            onClick={() => handleMoveToCart(item.id, item?.wishlistId)}
                                             className="w-full bg-[#501F08] text-white py-4 px-4 rounded-2xl font-black text-[10px] tracking-[0.2em] hover:bg-[#3a1606] transition-all hover:shadow-xl flex items-center justify-center gap-3 uppercase group/btn"
                                         >
                                             <ShoppingCart size={16} className="group-hover/btn:scale-110 transition-transform" />

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Trash2, ArrowRight } from "lucide-react";
-import { fetchCart, removeFromCart } from "../../../slices/cartSlice";
+import { ShoppingCart, Trash2, ArrowRight, Plus, Minus } from "lucide-react";
+import { fetchCart, removeFromCart, updateCartQty } from "../../../slices/cartSlice";
 
 export default function Cart() {
     const dispatch = useDispatch();
@@ -16,16 +16,32 @@ export default function Cart() {
         }
     }, [dispatch, user]);
 
-    const handleRemove = (id) => {
-        dispatch(removeFromCart(id));
+    const handleRemove = async (id) => {
+        await dispatch(removeFromCart(id));
     };
+
+    const handleQuantityChange = (item, type) => {
+        const increment = type === "inc" ? 1 : -1;
+        const currentQty = item?.qty || 1;
+        if (currentQty + increment < 1) return;
+
+        dispatch(updateCartQty({
+            cartId: item.cartId,
+            productId: item._id || item.productId,
+            qty: increment
+        }));
+    };
+
+
 
     const calculateTotal = () => {
         return items.reduce((total, item) => {
             const price = item?.selling_price || item?.price || item?.salePrice || 0;
-            return total + price;
+            const quantity = item?.qty || 1;
+            return total + (price * quantity);
         }, 0);
     };
+
 
     if (!user) {
         return (
@@ -48,7 +64,7 @@ export default function Cart() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FDFDFD] pb-10">
+        <div className=" bg-[#FDFDFD] pb-10">
             <div className="mx-auto px-6 md:px-12 lg:px-24 py-12">
                 <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
@@ -118,21 +134,44 @@ export default function Cart() {
                                                 <Trash2 size={20} />
                                             </button>
                                         </div>
-
-                                        <div className="flex items-end justify-between border-t border-gray-50">
-                                            <div className="flex flex-col gap-1">
-                                                <div className="flex items-center gap-4">
-                                                    <span className="text-2xl font-black text-[#501F08]">
-                                                        ₹{(item?.selling_price || item?.price || 0).toLocaleString()}
+                                        <div className="flex flex-col">
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-2xl font-black text-[#501F08]">
+                                                    ₹{(item?.selling_price || item?.price || 0).toLocaleString()}
+                                                </span>
+                                                {(item?.origional_price || item?.originalPrice) > (item?.selling_price || item?.price) && (
+                                                    <span className="text-sm font-bold text-gray-300 line-through">
+                                                        ₹{(item?.origional_price || item?.originalPrice).toLocaleString()}
                                                     </span>
-                                                    {(item?.origional_price || item?.originalPrice) > (item?.selling_price || item?.price) && (
-                                                        <span className="text-md font-bold text-gray-300 line-through">
-                                                            ₹{(item?.origional_price || item?.originalPrice).toLocaleString()}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                                )}
                                             </div>
                                         </div>
+                                        <div className="flex items-center justify-between border-t border-gray-50 pt-4 mt-auto">
+                                            <div className="flex items-center gap-6">
+                                                {/* Quantity Controls - Small & Dark Theme */}
+                                                <div className="flex items-center bg-[#501F08] rounded-xl p-1 shadow-md border border-[#501F08]/10">
+                                                    <button
+                                                        onClick={() => handleQuantityChange(item, "dec")}
+                                                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-all disabled:opacity-30 cursor-pointer"
+                                                        disabled={item?.qty <= 1}
+                                                    >
+                                                        <Minus size={14} />
+                                                    </button>
+                                                    <span className="w-8 text-center font-bold text-white text-sm">
+                                                        {item?.qty || 1}
+                                                    </span>
+                                                    <button
+                                                        onClick={() => handleQuantityChange(item, "inc")}
+                                                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-all cursor-pointer"
+                                                    >
+                                                        <Plus size={14} />
+                                                    </button>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             ))}

@@ -40,6 +40,20 @@ export const removeFromCart = createAsyncThunk(
     }
 );
 
+// Update cart quantity
+export const updateCartQty = createAsyncThunk(
+    "cart/updateCartQty",
+    async ({ cartId, productId, qty }, { rejectWithValue }) => {
+        try {
+            const response = await cartApi.updateCartQty(cartId, productId, qty);
+            return { cartId, productId, qty, ...response.data };
+        } catch (error) {
+            return rejectWithValue(error.response?.data || error.message);
+        }
+    }
+);
+
+
 const initialState = {
     items: [],
     loading: false,
@@ -71,7 +85,7 @@ const cartSlice = createSlice({
             })
             // Add to cart
             .addCase(addToCart.pending, (state) => {
-                state.loading = true;
+                state.error = null;
             })
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.loading = false;
@@ -80,6 +94,7 @@ const cartSlice = createSlice({
                     state.items.push(newItem);
                 }
             })
+
             .addCase(addToCart.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;

@@ -239,13 +239,13 @@ export const removeAddress = createAsyncThunk(
   async (id, { rejectWithValue, dispatch }) => {
     try {
       const res = await authApi.deleteAddress(id);
-      dispatch(fetchAddresses());
-      return res.data;
+      return { id, ...res.data };
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
   }
 );
+
 
 export const setMainAddress = createAsyncThunk(
   "auth/setMainAddress",
@@ -592,7 +592,20 @@ const authSlice = createSlice({
       });
 
     // Edit/Remove/SetDefault address use same loading/error states
-    const addressActionThunks = [modifyAddress, removeAddress, setMainAddress];
+    builder.addCase(removeAddress.pending, (state) => {
+      state.addressError = null;
+    })
+      .addCase(removeAddress.fulfilled, (state, action) => {
+        state.addressLoading = false;
+        state.addresses = state.addresses.filter(addr => addr._id !== action.payload.id);
+        state.addressMessage = action.payload.message || "Address removed successfully";
+      })
+      .addCase(removeAddress.rejected, (state, action) => {
+        state.addressLoading = false;
+        state.addressError = action.payload;
+      });
+
+    const addressActionThunks = [modifyAddress, setMainAddress];
     addressActionThunks.forEach((thunk) => {
       builder
         .addCase(thunk.pending, (state) => {
@@ -608,6 +621,7 @@ const authSlice = createSlice({
           state.addressError = action.payload;
         });
     });
+
   },
 });
 

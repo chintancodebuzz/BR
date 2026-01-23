@@ -160,9 +160,9 @@ const Academy = () => {
               PREMIUM NAIL EDUCATION
             </span>
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-[#501F08] mb-6 tracking-tighter leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#501F08] mb-6 tracking-tighter leading-tight">
             BR NAILS
-            <span className="block text-4xl md:text-5xl lg:text-6xl text-[#9e5d61] mt-2">
+            <span className="block text-2xl md:text-3xl lg:text-4xl text-[#9e5d61] mt-2">
               ACADEMY
             </span>
           </h1>
