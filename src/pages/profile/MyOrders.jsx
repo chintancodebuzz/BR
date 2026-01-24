@@ -2,12 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Package,
-  ChevronRight,
-  Truck,
   Calendar,
   Hash,
   IndianRupee,
   MapPin,
+  ArrowRight,
 } from "lucide-react";
 import { fetchOrders, cancelUserOrder } from "../../slices/orderSlice";
 import { useNavigate } from "react-router-dom";
@@ -100,7 +99,7 @@ export default function MyOrders() {
           return (
             <div
               key={order.id}
-              className="bg-white rounded-[20px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] transition-all duration-500 group"
+              className="bg-white rounded-[20px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] transition-all duration-500 group/order"
             >
               {/* Card Header */}
               <div className="px-8 py-6 border-b border-gray-50 bg-[#FDFCFB]">
@@ -169,9 +168,13 @@ export default function MyOrders() {
                     )}
                     <button
                       onClick={() => navigate(`/profile/orders/${order.id}`)}
-                      className="bg-white border border-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-[#501F08] hover:text-white transition-all shadow-sm"
+                      className="group/btn relative overflow-hidden bg-white border border-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-500 shadow-sm hover:border-[#501F08]"
                     >
-                      View Details
+                      <div className="absolute inset-0 w-0 bg-[#501F08] transition-all duration-500 ease-out group-hover/btn:w-full"></div>
+                      <span className="relative z-10 flex items-center gap-2 group-hover/btn:text-white transition-colors duration-500">
+                        View Details
+                        <ArrowRight size={16} className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -185,7 +188,7 @@ export default function MyOrders() {
                       key={idx}
                       className="flex flex-col sm:flex-row sm:items-center gap-6 pb-6 border-b border-gray-50 last:border-0 last:pb-0"
                     >
-                      <div className="w-24 h-24 rounded-2xl bg-gray-50 border border-gray-100 overflow-hidden shrink-0 group-hover:scale-105 transition-transform duration-500">
+                      <div className="w-24 h-24 rounded-2xl bg-gray-50 border border-gray-100 overflow-hidden shrink-0 group-hover/order:scale-105 transition-transform duration-500">
                         <img
                           src={item.images?.[0]}
                           alt={item.name}
