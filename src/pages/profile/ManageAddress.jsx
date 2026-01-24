@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { createAddress, fetchAddresses, modifyAddress, removeAddress, setMainAddress } from "../../slices/authSlice";
+import ConfirmationModal from "../../components/models/ConfirmationModal";
 
 export default function ManageAddress() {
     const dispatch = useDispatch();
@@ -22,6 +23,8 @@ export default function ManageAddress() {
 
     const [isAdding, setIsAdding] = useState(false);
     const [editingId, setEditingId] = useState(null);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [addressToDelete, setAddressToDelete] = useState(null);
     const [formData, setFormData] = useState({
         addressLine1: "",
         addressLine2: "",
@@ -85,8 +88,15 @@ export default function ManageAddress() {
     };
 
     const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this address?")) {
-            dispatch(removeAddress(id));
+        setAddressToDelete(id);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (addressToDelete) {
+            dispatch(removeAddress(addressToDelete));
+            setDeleteModalOpen(false);
+            setAddressToDelete(null);
         }
     };
 
@@ -106,15 +116,15 @@ export default function ManageAddress() {
         <div className="mx-auto">
             <div className="flex justify-between items-center mb-10">
                 <div>
-                    <h2 className="text-2xl font-black text-[#501F08] tracking-tight">Manage Addresses</h2>
-                    <p className="text-xs font-bold text-[#A87453]  tracking-widest opacity-70 mt-1">
+                    <h2 className="text-2xl font-black text-[#501F08] ">Manage Addresses</h2>
+                    <p className="text-xs font-bold text-[#A87453]   opacity-70 mt-1">
                         Configure your delivery destinations
                     </p>
                 </div>
                 {!isAdding && (
                     <button
                         onClick={() => { setIsAdding(true); resetForm(); }}
-                        className="flex items-center gap-2 bg-[#501F08] text-white px-6 py-3 rounded-xl font-bold text-[12px] tracking-widest  hover:bg-[#3a1606] transition-all shadow-lg hover:shadow-[#501F08]/20"
+                        className="flex items-center gap-2 bg-[#501F08] text-white px-6 py-3 rounded-xl font-bold text-[14px] hover:bg-[#3a1606] transition-all shadow-lg hover:shadow-[#501F08]/20"
                     >
                         <Plus className="w-4 h-4" />
                         Add New Address
@@ -139,7 +149,7 @@ export default function ManageAddress() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">Address Line 1*</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">Address Line 1*</label>
                                 <input
                                     required
                                     type="text"
@@ -151,7 +161,7 @@ export default function ManageAddress() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">Address Line 2 (Optional)</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">Address Line 2 (Optional)</label>
                                 <input
                                     type="text"
                                     name="addressLine2"
@@ -162,7 +172,7 @@ export default function ManageAddress() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">City*</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">City*</label>
                                 <input
                                     required
                                     type="text"
@@ -173,7 +183,7 @@ export default function ManageAddress() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">State*</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">State*</label>
                                 <input
                                     required
                                     type="text"
@@ -184,7 +194,7 @@ export default function ManageAddress() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">Zip / Postal Code*</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">Zip / Postal Code*</label>
                                 <input
                                     required
                                     type="text"
@@ -195,14 +205,14 @@ export default function ManageAddress() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">Address Type</label>
+                                <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">Address Type</label>
                                 <div className="flex gap-4">
                                     {['Home', 'Office', 'Other'].map(type => (
                                         <button
                                             key={type}
                                             type="button"
                                             onClick={() => setFormData(prev => ({ ...prev, type }))}
-                                            className={`flex-1 py-3 px-4 rounded-xl border text-[12px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${formData.type === type ? 'bg-[#501F08] text-white border-[#501F08] shadow-md' : 'bg-white text-gray-400 border-gray-100 hover:border-[#501F08]/20'}`}
+                                            className={`flex-1 py-3 px-4 rounded-xl border text-[12px] font-black uppercase  transition-all flex items-center justify-center gap-2 ${formData.type === type ? 'bg-[#501F08] text-white border-[#501F08] shadow-md' : 'bg-white text-gray-400 border-gray-100 hover:border-[#501F08]/20'}`}
                                         >
                                             {getTypeIcon(type)}
                                             {type}
@@ -212,21 +222,21 @@ export default function ManageAddress() {
                             </div>
                         </div>
 
-                        <div className="pt-6 border-t border-gray-50 flex gap-4">
-                            <button
-                                disabled={addressLoading}
-                                type="submit"
-                                className="flex-1 bg-[#501F08] text-white py-4 rounded-xl font-bold text-[11px] tracking-widest uppercase hover:bg-[#3a1606] transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
-                            >
-                                {addressLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                                {editingId ? "Update Address" : "Save Address"}
-                            </button>
+                        <div className="pt-6 border-t border-gray-50 flex justify-end gap-4">
                             <button
                                 type="button"
                                 onClick={() => { setIsAdding(false); setEditingId(null); }}
-                                className="px-8 border border-gray-200 text-gray-500 py-4 rounded-xl font-bold text-[11px] tracking-widest uppercase hover:bg-gray-50 transition-all"
+                                className="px-8 border border-gray-200 text-gray-500 py-3 rounded-xl font-bold text-[11px] uppercase hover:bg-gray-50 transition-all"
                             >
                                 Cancel
+                            </button>
+                            <button
+                                disabled={addressLoading}
+                                type="submit"
+                                className="bg-[#501F08] text-white px-8 py-3 rounded-xl font-bold text-[11px] uppercase hover:bg-[#3a1606] transition-all shadow-lg flex items-center gap-2 disabled:opacity-50"
+                            >
+                                {addressLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                                {editingId ? "Update Address" : "Save Address"}
                             </button>
                         </div>
                     </form>
@@ -236,7 +246,7 @@ export default function ManageAddress() {
                     {addressLoading && addresses.length === 0 ? (
                         <div className="col-span-2 py-20 flex flex-col items-center justify-center text-gray-300 italic">
                             <Loader2 className="w-10 h-10 animate-spin mb-4 text-[#501F08]/20" />
-                            <p className="text-sm font-bold uppercase tracking-widest opacity-50">Curating your addresses...</p>
+                            <p className="text-sm font-bold uppercase  opacity-50">Curating your addresses...</p>
                         </div>
                     ) : addresses.length === 0 ? (
                         <div className="col-span-2 py-20 bg-white border-2 border-dashed border-gray-100 rounded-[32px] flex flex-col items-center justify-center text-center px-10">
@@ -253,12 +263,12 @@ export default function ManageAddress() {
                                 className={`relative bg-white rounded-[28px] p-6 border transition-all duration-300 group ${address.isDefault ? 'border-[#501F08]/10 shadow-[0_15px_35px_rgba(80,31,8,0.06)]' : 'border-gray-50 hover:border-[#501F08]/10 hover:shadow-md'}`}
                             >
                                 <div className="flex justify-between items-start mb-6">
-                                    <div className={`px-4 py-1.5 rounded-full flex items-center gap-2 text-[8px] font-black uppercase tracking-widest ${address.type === 'Home' ? 'bg-orange-50 text-orange-600' : address.type === 'Office' ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-500'}`}>
+                                    <div className={`px-4 py-1.5 rounded-full flex items-center gap-2 text-[8px] font-black uppercase  ${address.type === 'Home' ? 'bg-orange-50 text-orange-600' : address.type === 'Office' ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-500'}`}>
                                         {getTypeIcon(address.type)}
                                         {address.type}
                                     </div>
                                     {address.isDefault ? (
-                                        <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest flex items-center gap-1">
+                                        <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[8px] font-black uppercase  flex items-center gap-1">
                                             <Check className="w-3 h-3" /> Default
                                         </span>
                                     ) : (
@@ -267,9 +277,9 @@ export default function ManageAddress() {
                                 </div>
 
                                 <div className="space-y-1 mb-8">
-                                    <p className="text-gray-800 font-bold text-sm leading-relaxed">{address.addressLine1}</p>
-                                    {address.addressLine2 && <p className="text-gray-500 text-xs font-medium">{address.addressLine2}</p>}
-                                    <p className="text-gray-400 text-[12px] font-black uppercase tracking-widest pb-1">
+                                    <p className="text-gray-800 font-bold text-md leading-relaxed">{address.addressLine1}</p>
+                                    {address.addressLine2 && <p className="text-gray-500 text-sm font-medium">{address.addressLine2}</p>}
+                                    <p className="text-gray-400 text-xs font-black  pb-1">
                                         {address.city}, {address.state} - {address.zipCode}
                                     </p>
                                 </div>
@@ -284,7 +294,7 @@ export default function ManageAddress() {
                                         </button>
                                         <button
                                             onClick={() => handleDelete(address.id)}
-                                            className="p-2.5 bg-red-50 text-red-500 rounded-xl transition-all"
+                                            className="p-2.5 bg-red-50 text-[#501F08] rounded-xl transition-all"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </button>
@@ -292,7 +302,7 @@ export default function ManageAddress() {
                                     {!address.isDefault && (
                                         <button
                                             onClick={() => handleSetDefault(address.id)}
-                                            className="text-[9px] font-black uppercase tracking-widest text-[#A87453] hover:text-[#501F08] transition-colors"
+                                            className="text-[10px] font-black uppercase  text-[#A87453] hover:text-[#501F08] transition-colors"
                                         >
                                             Set as Default
                                         </button>
@@ -303,6 +313,24 @@ export default function ManageAddress() {
                     )}
                 </div>
             )}
+
+            <ConfirmationModal
+                isOpen={deleteModalOpen}
+                onClose={() => {
+                    setDeleteModalOpen(false);
+                    setAddressToDelete(null);
+                }}
+                onConfirm={confirmDelete}
+                title="Delete Address?"
+                message="Are you sure you want to delete this address? This action cannot be undone."
+                confirmText="Delete Address"
+                cancelText="Keep It"
+                ConfirmIcon={Trash2}
+                // confirmButtonClass="bg-red-500 hover:bg-red-600 text-white shadow-red-500/20"
+                // iconColorClass="text-red-500"
+                // iconBgClass="bg-red-50"
+                // iconRingClass="bg-red-100"
+            />
         </div>
     );
 }

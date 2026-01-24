@@ -1,7 +1,20 @@
 import React from "react";
-import { LogOut, X } from "lucide-react";
+import { X, AlertTriangle, Trash2 } from "lucide-react";
 
-const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
+const ConfirmationModal = ({
+    isOpen,
+    onClose,
+    onConfirm,
+    title,
+    message,
+    confirmText = "Confirm",
+    cancelText = "Cancel",
+    ConfirmIcon = Trash2, // Default icon for confirmation
+    confirmButtonClass = "bg-[#501F08] hover:bg-[#3a1606] text-white", // Default to theme color but can be overridden (e.g., red for delete)
+    iconColorClass = "text-[#501F08]",
+    iconBgClass = "bg-[#501F08]/5",
+    iconRingClass = "bg-[#501F08]/10"
+}) => {
     if (!isOpen) return null;
 
     return (
@@ -23,19 +36,19 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
                 </button>
 
                 <div className="p-8 flex flex-col items-center text-center">
-                    {/* Icon with rings */}
+                    {/* Icon with rings - Reusing the aesthetic from LogoutModal */}
                     <div className="relative mb-6 group">
-                        <div className="absolute inset-0 bg-[#501F08]/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300 opacity-50"></div>
-                        <div className="relative w-20 h-20 bg-[#501F08]/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                            <div className="w-14 h-14 bg-[#501F08]/10 rounded-full flex items-center justify-center">
-                                <LogOut className="w-7 h-7 text-[#501F08] ml-1" />
+                        <div className={`absolute inset-0 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300 opacity-50 ${iconColorClass.replace('text-', 'bg-').replace('text', 'bg')}/20`}></div>
+                        <div className={`relative w-20 h-20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ${iconBgClass}`}>
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center ${iconRingClass}`}>
+                                <ConfirmIcon className={`w-7 h-7 ${iconColorClass} ml-0`} />
                             </div>
                         </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3 ">Sign Out?</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3 ">{title}</h3>
                     <p className="text-gray-600 mb-8 leading-relaxed max-w-xs">
-                        Are you sure you want to end your current session?
+                        {message}
                     </p>
 
                     <div className="flex gap-4 w-full">
@@ -43,14 +56,14 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
                             onClick={onClose}
                             className="flex-1 py-3.5 px-6 bg-white text-gray-700 font-semibold rounded-2xl hover:bg-gray-50 transition-all border border-gray-200 hover:border-gray-300 shadow-sm active:scale-95"
                         >
-                            Cancel
+                            {cancelText}
                         </button>
                         <button
                             onClick={onConfirm}
-                            className="flex-1 py-3.5 px-6 bg-[#501F08] text-white font-semibold rounded-2xl hover:bg-[#3a1606] transition-all shadow-lg shadow-[#501F08]/25 hover:shadow-[#501F08]/40 active:scale-95 flex items-center justify-center gap-2"
+                            className={`flex-1 py-3.5 px-6 font-semibold rounded-2xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 ${confirmButtonClass}`}
                         >
-                            <LogOut className="w-4 h-4" />
-                            Sign Out
+                            <ConfirmIcon className="w-4 h-4" />
+                            {confirmText}
                         </button>
                     </div>
                 </div>
@@ -59,4 +72,4 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
     );
 };
 
-export default LogoutModal;
+export default ConfirmationModal;

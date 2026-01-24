@@ -62,7 +62,7 @@ export default function ChangePassword() {
             <form onSubmit={formik.handleSubmit} className="space-y-3 max-w-lg">
                 {/* Old Password */}
                 <div >
-                    <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">
+                    <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">
                         Current Password
                     </label>
                     <div className="relative">
@@ -97,7 +97,7 @@ export default function ChangePassword() {
 
                 {/* New Password */}
                 <div>
-                    <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">
+                    <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">
                         New Password
                     </label>
                     <div className="relative">
@@ -132,7 +132,7 @@ export default function ChangePassword() {
 
                 {/* Confirm Password */}
                 <div className="space-y-1">
-                    <label className="text-[12px] font-black text-[#501F08] uppercase tracking-widest opacity-60">
+                    <label className="text-[12px] font-black text-[#501F08] uppercase  opacity-60">
                         Confirm New Password
                     </label>
                     <div className="relative">
