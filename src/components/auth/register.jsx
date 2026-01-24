@@ -12,12 +12,14 @@ import {
 } from "lucide-react";
 import logo from "../../assets/logos/logo_white.svg";
 import OTPModal from "../models/otpModal";
+import NewPhoneInput from "../common/NewPhoneInput";
 import { useDispatch } from "react-redux";
 import { register, reqVerifyEmail } from "../../slices/authSlice";
 import { useToast } from "../../contexts/ToastContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toastEvents } from "../../utils/toastEventEmitter";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 import { APP_ROUTES } from "../../constants/appRoutes";
 
@@ -40,7 +42,15 @@ const Register = () => {
       .email("Please enter a valid email address")
       .required("Email address is required"),
     phoneNo: Yup.string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+      .test(
+        "is-valid-phone",
+        "Invalid phone number for the selected country",
+        (value) => {
+          if (!value) return false;
+          // libphonenumber-js handles the "+" prefix and extracts country automatically
+          return isValidPhoneNumber(value);
+        },
+      )
       .required("Mobile Number is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
@@ -318,29 +328,16 @@ const Register = () => {
 
                   {/* Mobile */}
                   <div className="relative group">
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Phone
-                          className={`h-5 w-5 ${formik.touched.phoneNo && formik.errors.phoneNo ? "text-red-400" : "text-gray-400"}`}
-                        />
-                      </div>
-                      <input
-                        type="tel"
-                        name="phoneNo"
-                        {...formik.getFieldProps("phoneNo")}
-                        className={`w-full pl-10 pr-3 py-3 bg-white border ${
-                          formik.touched.phoneNo && formik.errors.phoneNo
-                            ? "border-red-300 focus:ring-red-200"
-                            : "border-gray-300 focus:ring-[#501F08]"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
-                        placeholder="Mobile Number"
-                      />
-                    </div>
-                    {formik.touched.phoneNo && formik.errors.phoneNo && (
-                      <p className="text-red-500 text-xs mt-1 ml-1">
-                        {formik.errors.phoneNo}
-                      </p>
-                    )}
+                    <NewPhoneInput
+                      name="phoneNo"
+                      value={formik.values.phoneNo}
+                      onChange={(value) =>
+                        formik.setFieldValue("phoneNo", value)
+                      }
+                      onBlur={() => formik.setFieldTouched("phoneNo", true)}
+                      error={formik.errors.phoneNo}
+                      touched={formik.touched.phoneNo}
+                    />
                   </div>
 
                   {/* Password */}
