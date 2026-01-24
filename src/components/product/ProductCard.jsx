@@ -15,9 +15,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
     const displayImage = (product.images && product.images.length > 0) ? product.images[0] : (product.image || '/placeholder.jpg');
     const discount = product.discount || (originalPrice > sellingPrice ? Math.round(((originalPrice - sellingPrice) / originalPrice) * 100) : null);
 
-    const isInWishlist = wishlistItems.some(item =>
-        (item.product?.id || item.product?._id || item.id || item._id) === productId
-    );
+    const isInWishlist = wishlistItems.some(item => item.id === productId);
 
     const handleWishlist = async (e) => {
         e.preventDefault();

@@ -78,7 +78,6 @@ export const useAuthManager = () => {
         dispatch(getProfile());
 
         const heartbeatInterval = setInterval(() => {
-            console.log("💓 ~ Heartbeat check...");
             dispatch(getProfile());
         }, 60000); // Check every 60 seconds
 
