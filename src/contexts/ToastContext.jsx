@@ -90,9 +90,9 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      <div className="fixed top-6 right-6 z-[9999] space-y-3 pointer-events-none">
+      <div className="fixed top-28 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-3 pointer-events-none w-full px-6">
         {toasts.map((toastItem) => (
-          <div key={toastItem.id} className="pointer-events-auto">
+          <div key={toastItem.id} className="pointer-events-auto flex justify-center w-full">
             <CustomToast
               message={toastItem.message}
               type={toastItem.type}

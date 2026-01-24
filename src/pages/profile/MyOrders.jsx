@@ -69,7 +69,7 @@ export default function MyOrders() {
           collections and start shopping!
         </p>
         <button
-          className="bg-[#501F08] text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[#3a1606] transition-all shadow-xl hover:shadow-[#501F08]/20 active:scale-95"
+          className="bg-[#501F08] text-white px-10 py-4 rounded-2xl font-black text-sm uppercase  hover:bg-[#3a1606] transition-all shadow-xl hover:shadow-[#501F08]/20 active:scale-95"
           onClick={() => navigate("/products")}
         >
           Explore Collections

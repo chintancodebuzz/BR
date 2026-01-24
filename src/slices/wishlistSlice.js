@@ -87,15 +87,21 @@ const wishlistSlice = createSlice({
             })
             // Remove from wishlist
             .addCase(removeFromWishlist.pending, (state) => {
-                state.loading = true;
+                state.error = null;
             })
             .addCase(removeFromWishlist.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = state.items.filter(item => item._id !== action.payload.id);
+                state.items = state.items.filter(item => (item.wishlistId || item._id) !== action.payload.id);
             })
             .addCase(removeFromWishlist.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            // Clear wishlist on logout
+            .addCase("auth/logout/fulfilled", (state) => {
+                state.items = [];
+                state.loading = false;
+                state.error = null;
             });
     },
 });

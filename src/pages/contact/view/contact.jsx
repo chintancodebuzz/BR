@@ -125,7 +125,7 @@ const Contact = () => {
       <div className="relative mx-auto px-6 md:px-12 lg:px-24 py-20">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#501F08] mb-4 tracking-tighter">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#501F08] mb-4 ">
             GET IN TOUCH
           </h1>
           <div className="relative inline-block">

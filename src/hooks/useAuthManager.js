@@ -71,18 +71,18 @@ export const useAuthManager = () => {
     }, [accessToken, refreshToken, isAuthenticated, dispatch]);
 
     // Heartbeat check to monitor account status (deactivation by admin)
-    useEffect(() => {
-        if (!isAuthenticated) return;
+    // useEffect(() => {
+    //     if (!isAuthenticated) return;
 
-        // Initial check
-        dispatch(getProfile());
+    //     // Initial check
+    //     dispatch(getProfile());
 
-        const heartbeatInterval = setInterval(() => {
-            dispatch(getProfile());
-        }, 60000); // Check every 60 seconds
+    //     const heartbeatInterval = setInterval(() => {
+    //         dispatch(getProfile());
+    //     }, 60000); // Check every 60 seconds
 
-        return () => clearInterval(heartbeatInterval);
-    }, [isAuthenticated, dispatch]);
+    //     return () => clearInterval(heartbeatInterval);
+    // }, [isAuthenticated, dispatch]);
 
     return null;
 };

@@ -59,12 +59,12 @@ export default function Products() {
       {/* Header Section */}
       <div className="bg-[#FAF7F5] py-12">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#A87453] uppercase tracking-widest mb-4">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#A87453] uppercase  mb-4">
             <span className="hover:text-[#501F08] cursor-pointer" onClick={() => navigate('/')}>Home</span>
             <ChevronRight className="w-3 h-3" />
             <span className="text-[#501F08]">Shop</span>
           </div>
-          <h1 className="text-4xl font-black text-[#501F08] uppercase tracking-tight">Our Collection</h1>
+          <h1 className="text-4xl font-black text-[#501F08] uppercase ">Our Collection</h1>
         </div>
       </div>
 
@@ -75,7 +75,7 @@ export default function Products() {
             <div className="space-y-10 sticky top-32">
               {/* Category Filter */}
               <div>
-                <h3 className="text-sm font-black text-[#501F08] uppercase tracking-[0.2em] mb-6 border-b border-[#501F08]/10 pb-4">Categories</h3>
+                <h3 className="text-sm font-black text-[#501F08] uppercase  mb-6 border-b border-[#501F08]/10 pb-4">Categories</h3>
                 <div className="space-y-4">
                   {categories.map((cat, i) => (
                     <label key={i} className="flex items-center justify-between group cursor-pointer hover:text-[#501F08] transition-colors">
@@ -91,7 +91,7 @@ export default function Products() {
 
               {/* Price Filter */}
               <div>
-                <h3 className="text-sm font-black text-[#501F08] uppercase tracking-[0.2em] mb-6 border-b border-[#501F08]/10 pb-4">Price Range</h3>
+                <h3 className="text-sm font-black text-[#501F08] uppercase  mb-6 border-b border-[#501F08]/10 pb-4">Price Range</h3>
                 <div className="space-y-4">
                   {priceRanges.map((range, i) => (
                     <label key={i} className="flex items-center gap-3 group cursor-pointer">
@@ -104,7 +104,7 @@ export default function Products() {
 
               {/* Luxury Banner in Sidebar */}
               <div className="bg-[#FAF7F5] p-6 rounded-2xl border border-[#501F08]/5">
-                <p className="text-[10px] font-bold text-[#A87453] uppercase tracking-widest mb-2">Professional Grade</p>
+                <p className="text-[10px] font-bold text-[#A87453] uppercase  mb-2">Professional Grade</p>
                 <p className="text-sm font-bold text-[#501F08] leading-tight mb-4">Experience Salon Quality at Home</p>
                 <div className="h-0.5 w-12 bg-[#501F08]"></div>
               </div>
@@ -118,12 +118,12 @@ export default function Products() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                  className="hidden lg:flex items-center gap-2 text-xs font-bold text-[#501F08] uppercase tracking-widest px-4 py-2 bg-[#FAF7F5] rounded-xl hover:bg-[#501F08] hover:text-white transition-all"
+                  className="hidden lg:flex items-center gap-2 text-xs font-bold text-[#501F08] uppercase  px-4 py-2 bg-[#FAF7F5] rounded-xl hover:bg-[#501F08] hover:text-white transition-all"
                 >
                   <Filter className="w-4 h-4" />
                   {isFilterOpen ? 'Hide Filters' : 'Show Filters'}
                 </button>
-                <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">
+                <p className="text-[10px] font-bold  text-gray-400 uppercase">
                   Showing <span className="text-[#501F08]">{displayProducts.length}</span> Masterpieces
                 </p>
               </div>
@@ -153,7 +153,7 @@ export default function Products() {
               ) : error ? (
                 <div className="text-center py-20 bg-[#FDFDFD] rounded-3xl border border-dashed border-gray-200">
                   <p className="text-red-800 font-bold mb-4 italic">"{error}"</p>
-                  <button onClick={() => dispatch(fetchProducts())} className="px-6 py-2 bg-[#501F08] text-white rounded-lg font-bold text-[10px] tracking-widest uppercase">Retry</button>
+                  <button onClick={() => dispatch(fetchProducts())} className="px-6 py-2 bg-[#501F08] text-white rounded-lg font-bold text-[10px]  uppercase">Retry</button>
                 </div>
               ) : paginatedProducts.length === 0 ? (
                 <div className="text-center py-32">
@@ -161,7 +161,7 @@ export default function Products() {
                 </div>
               ) : (
                 <>
-                  <div className={viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10' : 'space-y-10'}>
+                  <div className={viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10' : 'space-y-6'}>
                     {paginatedProducts.map((product) => (
                       <ProductCard
                         key={product.id || product._id}
