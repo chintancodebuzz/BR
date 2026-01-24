@@ -631,6 +631,7 @@ export const {
   clearSuccessStates,
   setTokens,
   setUser,
+  clearAddressState,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -12,6 +12,9 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import AccountOverview from "./pages/profile/AccountOverview";
 import ManageAddress from "./pages/profile/ManageAddress";
 import ChangePassword from "./pages/profile/ChangePassword";
+import MyOrders from "./pages/profile/MyOrders";
+import OrderDetails from "./pages/profile/OrderDetails";
+import Checkout from "./pages/checkout/view/Checkout";
 import TopBar from "./components/home/topBar";
 import ScrollToTop from "./components/common/ScrollToTop";
 import FloatingButtons from "./components/common/FloatingButtons";
@@ -31,7 +34,7 @@ const MainLayout = () => {
     <>
       <TopBar />
       <Header />
-      <main className={`grow pt-19 ${!isHomePage ? 'bg-[#FDFDFD]' : ''}`}>
+      <main className={`grow pt-19 ${!isHomePage ? "bg-[#FDFDFD]" : ""}`}>
         <Outlet />
       </main>
       <Footer />
@@ -55,11 +58,14 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/academy" element={<Academy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<ProfilePage />}>
               <Route index element={<AccountOverview />} />
+              <Route path="orders" element={<MyOrders />} />
+              <Route path="orders/:id" element={<OrderDetails />} />
               <Route path="address" element={<ManageAddress />} />
               <Route path="password" element={<ChangePassword />} />
             </Route>
