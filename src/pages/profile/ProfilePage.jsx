@@ -19,7 +19,6 @@ import LogoutModal from "../../components/models/LogoutModal";
 export default function ProfilePage() {
     const { user } = useSelector((state) => state.auth);
     const currentUser = user?.data || user;
-    console.log("🚀 ~ ProfilePage ~ currentUser:", currentUser)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();

@@ -288,7 +288,7 @@ const Register = () => {
                             disabled={!formik.values.email || isSendingOTP}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 cursor-pointer ${
                               formik.values.email && !isSendingOTP
-                                ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-md"
+                                ? "bg-linear-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-md"
                                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
                             }`}
                           >
@@ -453,7 +453,7 @@ const Register = () => {
                         checked={formik.values.acceptTerms}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`h-4 w-4 text-[#501F08] focus:ring-[#501F08] border-gray-300 rounded flex-shrink-0 cursor-pointer ${
+                        className={`h-4 w-4 text-[#501F08] focus:ring-[#501F08] border-gray-300 rounded shrink-0 cursor-pointer ${
                           formik.touched.acceptTerms &&
                           formik.errors.acceptTerms
                             ? "border-red-500 ring-1 ring-red-500"
@@ -493,7 +493,7 @@ const Register = () => {
                     disabled={isLoading || !isEmailVerified}
                     className={`w-full group relative px-6 py-3.5 rounded-xl font-semibold shadow-lg transition-all duration-300 ${
                       isEmailVerified
-                        ? "bg-gradient-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-xl"
+                        ? "bg-linear-to-r from-[#501F08] to-[#9e5d61] text-white hover:shadow-xl"
                         : "bg-gray-200 text-gray-400 cursor-not-allowed"
                     }`}
                   >

@@ -26,8 +26,6 @@ export default function Header() {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-
-
   useEffect(() => {
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
@@ -84,28 +82,30 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-50">
       <header
-        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${scrolled
-          ? "backdrop-blur-md shadow-lg top-7"
-          : "backdrop-blur-md shadow-lg top-7"
-          } `}
+        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${
+          scrolled
+            ? "backdrop-blur-md shadow-lg top-7"
+            : "backdrop-blur-md shadow-lg top-7"
+        } `}
       >
-        <div className="mx-auto px-6 md:px-12 lg:px-24 py-1 flex items-center justify-between">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-1 flex items-center justify-between">
           {/* Logo */}
           <Link to={APP_ROUTES.HOME} className="shrink-0">
             <img
               src={logo}
               alt="BR Nails Logo"
-              className="h-12 w-12 md:h-16 md:w-16 rounded-full"
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 rounded-full"
             />
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center space-x-8 lg:space-x-10 font-medium text-[#333333]">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-10 font-medium text-[#333333]">
             <NavLink
               to={APP_ROUTES.HOME}
               end
               className={({ isActive }) =>
-                `hover:text-[#501F08] relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-[#501F08] relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -131,12 +131,14 @@ export default function Header() {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
-                {desktopProductsOpen && (
-                  <div className="absolute left-0 top-full mt-2 w-72 bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+              </button>
+              {desktopProductsOpen && (
+                <div className="absolute left-0 top-full pt-2 w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                     {/* Scrollable Content with Custom Scrollbar */}
                     <div className="max-h-96 overflow-y-auto custom-scrollbar">
                       {/* Gradient Fade Top */}
-                      <div className="sticky top-0 h-4 bg-gradient-to-b from-white to-transparent pointer-events-none z-10"></div>
+                      <div className="sticky top-0 h-4 bg-linear-to-b from-white to-transparent pointer-events-none z-10"></div>
 
                       <div className="px-2 pb-2">
                         {collections && collections.length > 0 ? (
@@ -147,7 +149,7 @@ export default function Header() {
                               className="group/item block relative"
                               onClick={() => setDesktopProductsOpen(false)}
                             >
-                              <div className="flex items-center gap-3 px-4 py-2 justify-between rounded-xl hover:bg-gradient-to-r hover:from-[#501F08]/5 hover:to-[#501F08]/10 transition-all duration-300 border border-transparent hover:border-[#501F08]/20">
+                              <div className="flex items-center gap-3 px-4 py-2 justify-between rounded-xl hover:bg-linear-to-r hover:from-[#501F08]/5 hover:to-[#501F08]/10 transition-all duration-300 border border-transparent hover:border-[#501F08]/20">
                                 {/* Collection Name */}
                                 <div>
                                   <p className="font-semibold text-gray-800 group-hover/item:text-[#501F08] transition-colors">
@@ -202,7 +204,7 @@ export default function Header() {
                       </div>
 
                       {/* Gradient Fade Bottom */}
-                      <div className="sticky bottom-0 h-4 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+                      <div className="sticky bottom-0 h-4 bg-linear-to-t from-white to-transparent pointer-events-none"></div>
                     </div>
 
                     {/* Footer */}
@@ -216,8 +218,8 @@ export default function Header() {
                       </Link>
                     </div>
                   </div>
-                )}
-              </button>
+                </div>
+              )}
             </div>
 
             <style jsx>{`
@@ -234,7 +236,8 @@ export default function Header() {
             <NavLink
               to="/academy"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -243,7 +246,8 @@ export default function Header() {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -252,25 +256,27 @@ export default function Header() {
           </nav>
 
           {/* Desktop Buttons Container */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
             <Link
               to="/products"
-              className="relative group px-4 py-1.5 overflow-hidden rounded-md bg-transparent border-2 border-[#501F08] text-[#501F08] font-semibold transition-all duration-300 hover:text-white"
+              className="relative group px-3 py-1.5 xl:px-4 overflow-hidden rounded-md bg-transparent border-2 border-[#501F08] text-[#501F08] font-semibold transition-all duration-300 hover:text-white text-sm xl:text-base"
             >
               <div className="absolute inset-0 bg-[#501F08] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              <span className="relative z-10">BULK ORDER</span>
+              <span className="relative z-10 whitespace-nowrap">
+                BULK ORDER
+              </span>
             </Link>
 
             {/* Book Now Button - Desktop */}
             <Link
               to="/book-now"
-              className="bg-[#501F08] text-white px-4 py-2 rounded-md font-semibold transition hover:bg-[#3a1606] shadow-md"
+              className="bg-[#501F08] text-white px-3 py-2 xl:px-4 rounded-md font-semibold transition hover:bg-[#3a1606] shadow-md text-sm xl:text-base whitespace-nowrap"
             >
               BOOK NOW
             </Link>
 
             {/* Cart & Wishlist Icons */}
-            <div className="flex items-center gap-2 ml-2">
+            <div className="flex items-center gap-2 ml-1 xl:ml-2">
               {/* Wishlist */}
               <Link
                 to="/wishlist"
@@ -294,9 +300,7 @@ export default function Header() {
                 className="group relative p-2.5 text-gray-700 hover:text-[#501F08] bg-gray-50/50 hover:bg-[#501F08]/10 rounded-2xl border border-gray-100 hover:border-[#501F08]/20 transition-all active:scale-95 shadow-sm"
                 aria-label="Cart"
               >
-                <ShoppingCart
-                  size={20}
-                />
+                <ShoppingCart size={20} />
                 {cartItems?.length > 0 && (
                   <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#501F08] text-[9px] font-bold text-white border-2 border-white shadow-md group-hover:scale-110 transition-transform">
                     {cartItems.length}
@@ -317,34 +321,36 @@ export default function Header() {
                     />
                   </div>
 
-                  <span className="max-w-[100px] truncate">
+                  <span className="max-w-[100px] truncate hidden xl:block">
                     {user?.name || "User"}
                   </span>
                 </button>
 
                 {/* User Dropdown */}
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
-                  <div className="p-3 border-b border-gray-100 bg-gray-50/50">
-                    <p className="text-sm font-semibold text-gray-900 truncate">
-                      {user?.name}
-                    </p>
-                    <p className="text-xs text-gray-500 truncate">
-                      {user?.email}
-                    </p>
+                <div className="absolute right-0 top-full pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
+                  <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                    <div className="p-3 border-b border-gray-100 bg-gray-50/50">
+                      <p className="text-sm font-semibold text-gray-900 truncate">
+                        {user?.name}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {user?.email}
+                      </p>
+                    </div>
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      My Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
                   </div>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    My Profile
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </button>
                 </div>
               </div>
             ) : (
@@ -353,26 +359,24 @@ export default function Header() {
                 className="ml-2 group p-2 text-gray-600 hover:text-[#501F08] hover:bg-[#501F08]/5 rounded-full transition-all"
                 aria-label="Login"
               >
-                <User
-                  size={22}
-                />
+                <User size={22} />
               </Link>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-3xl text-gray-700"
+            className="lg:hidden text-3xl text-gray-700 focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            ☰
+            {mobileMenuOpen ? "✖" : "☰"}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <nav className="md:hidden bg-white/95 backdrop-blur-xl border-t border-[#f7f7f7] shadow-lg h-[calc(100vh-80px)] overflow-y-auto">
+          <nav className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-[#f7f7f7] shadow-lg h-[calc(100vh-80px)] overflow-y-auto w-full absolute left-0 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col px-6 py-4 space-y-4 font-medium text-gray-700">
               {/* User Info Mobile */}
               {isAuthenticated && (
@@ -398,7 +402,8 @@ export default function Header() {
                 to={APP_ROUTES.HOME}
                 end
                 className={({ isActive }) =>
-                  `hover:text-[#501F08] py-2.5 border-b text-sm ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-[#501F08] py-2.5 border-b text-sm ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -428,7 +433,7 @@ export default function Header() {
                   </svg>
                 </button>
                 {mobileProductsOpen && (
-                  <div className="mt-2 mb-3 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 overflow-hidden">
+                  <div className="mt-2 mb-3 bg-linear-to-br from-gray-50 to-white rounded-xl border border-gray-100 overflow-hidden">
                     {/* Scrollable Collections */}
                     <div className="max-h-64 overflow-y-auto custom-scrollbar-mobile p-2">
                       {collections && collections.length > 0 ? (
@@ -442,9 +447,9 @@ export default function Header() {
                               setMobileProductsOpen(false);
                             }}
                           >
-                            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-[#501F08]/5 hover:to-[#501F08]/10 transition-all border border-transparent hover:border-[#501F08]/20">
+                            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-linear-to-r hover:from-[#501F08]/5 hover:to-[#501F08]/10 transition-all border border-transparent hover:border-[#501F08]/20">
                               {/* Number Badge */}
-                              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#501F08]/10 to-[#501F08]/5 flex items-center justify-center text-[#501F08] font-bold text-xs shrink-0">
+                              <div className="w-7 h-7 rounded-lg bg-linear-to-br from-[#501F08]/10 to-[#501F08]/5 flex items-center justify-center text-[#501F08] font-bold text-xs shrink-0">
                                 {index + 1}
                               </div>
 
@@ -532,7 +537,8 @@ export default function Header() {
               <NavLink
                 to="/academy"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -542,7 +548,8 @@ export default function Header() {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -583,8 +590,13 @@ export default function Header() {
                   className="flex items-center justify-center space-x-2 hover:text-[#501F08] py-4 bg-[#501F08]/5 rounded-xl transition-all duration-300 group border border-transparent hover:border-[#501F08]/20 mt-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <User size={20} className="text-gray-600 group-hover:text-[#501F08]" />
-                  <span className="font-semibold text-gray-700 group-hover:text-[#501F08]">LOGIN</span>
+                  <User
+                    size={20}
+                    className="text-gray-600 group-hover:text-[#501F08]"
+                  />
+                  <span className="font-semibold text-gray-700 group-hover:text-[#501F08]">
+                    LOGIN
+                  </span>
                 </Link>
               )}
             </div>

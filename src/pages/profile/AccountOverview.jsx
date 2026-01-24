@@ -10,7 +10,6 @@ import DefaultProfile from "../../assets/home/default-profile.svg";
 
 export default function AccountOverview() {
     const { user } = useSelector((state) => state.auth);
-    console.log("🚀 ~ AccountOverview ~ user:", user)
     const dispatch = useDispatch();
     const { showToast } = useToast();
     const [isEditing, setIsEditing] = useState(false);
