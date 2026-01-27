@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import banner from "../../assets/home/banner_1.svg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-import { BannerSkeleton } from "../common/Skeleton";
+import { BannerSkeleton } from "../common/loading-skeletons";
 
 export default function Banner({ banners, loading }) {
   if (loading) return <BannerSkeleton />;

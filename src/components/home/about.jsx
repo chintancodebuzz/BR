@@ -23,7 +23,7 @@ const About = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#fdf9f7] via-white to-[#fdf9f7] py-20">
+    <section className="relative overflow-hidden bg-linear-to-br from-[#fdf9f7] via-white to-[#fdf9f7] py-20">
       {/* Decorative Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#501F08]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#501F08]/5 rounded-full blur-3xl"></div>
@@ -45,11 +45,11 @@ const About = () => {
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
                 Welcome to{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#501F08] to-[#8b3b14]">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-[#501F08] to-[#8b3b14]">
                   BR Nails
                 </span>
               </h1>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-[#501F08] to-[#8b3b14] rounded-full"></div>
+              <div className="w-24 h-1.5 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full"></div>
             </div>
 
             {/* Description */}
@@ -103,12 +103,12 @@ const About = () => {
           {/* RIGHT LOGO */}
           <div className="relative flex items-center justify-end">
             {/* Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#501F08]/20 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-[#501F08]/20 to-transparent rounded-full blur-3xl"></div>
 
             {/* Logo Container */}
             <div className="relative group">
               {/* Rotating Border */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#501F08] to-[#8b3b14] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
 
               {/* Logo Card */}
               <div className="relative bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 group-hover:scale-105 transition-transform duration-500">
@@ -128,7 +128,7 @@ const About = () => {
       </div>
 
       {/* Bottom Accent Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#501F08] via-[#8b3b14] to-[#501F08]"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-[#501F08] via-[#8b3b14] to-[#501F08]"></div>
 
       {/* Animation Keyframes */}
       <style jsx>{`

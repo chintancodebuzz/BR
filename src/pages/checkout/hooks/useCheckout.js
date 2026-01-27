@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchAddresses, createAddress } from "../../../slices/authSlice";
 import * as orderApi from "../../../services/orderApi";
+import { fetchCart } from "../../../slices/cartSlice";
 
 export const useCheckout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { items, loading: cartLoading } = useSelector((state) => state.cart);
-    const { addresses, addressLoading } = useSelector((state) => state.auth);
+    const { addresses, addressLoading: storeAddressLoading } = useSelector((state) => state.auth);
     const { user } = useSelector((state) => state.auth);
 
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [modalView, setModalView] = useState("list"); // 'list' | 'create'
-
     const [formData, setFormData] = useState({
         addressLine1: "",
         addressLine2: "",
@@ -25,7 +25,6 @@ export const useCheckout = () => {
         zipCode: "",
         type: "Home",
     });
-
     useEffect(() => {
         if (user) {
             dispatch(fetchAddresses());
@@ -94,18 +93,12 @@ export const useCheckout = () => {
         try {
             const orderData = {
                 addressId: selectedAddressId,
-                // items: items.map(item => ({
-                //     productId: item.productId?._id || item._id,
-                //     qty: item.qty,
-                //     price: item.selling_price || item.price
-                // })),
-                // totalAmount: calculateTotal(),
-                // paymentMethod: "COD"
             };
 
             const response = await orderApi.placeOrder(orderData);
             if (response.data) {
                 navigate("/profile/orders");
+                dispatch(fetchCart());
             }
         } catch (error) {
             console.error("Failed to place order:", error);
@@ -117,7 +110,7 @@ export const useCheckout = () => {
         items,
         cartLoading,
         addresses,
-        addressLoading,
+        addressLoading: storeAddressLoading,
         user,
         selectedAddressId,
         showModal,

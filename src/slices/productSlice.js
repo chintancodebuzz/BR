@@ -95,9 +95,19 @@ const productSlice = createSlice({
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
-                state.products = action.payload.data || action.payload;
-                state.filteredProducts = action.payload.data || action.payload;
-                state.totalItems = (action.payload.data || action.payload).length;
+                const newProducts = action.payload.data || action.payload;
+
+                if (state.currentPage === 1) {
+                    state.products = newProducts;
+                } else {
+                    // Filter out duplicates just in case
+                    const existingIds = new Set(state.products.map(p => p.id || p._id));
+                    const uniqueNewProducts = newProducts.filter(p => !existingIds.has(p.id || p._id));
+                    state.products = [...state.products, ...uniqueNewProducts];
+                }
+
+                state.filteredProducts = state.products;
+                state.totalItems = action.payload.total || state.products.length;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.loading = false;

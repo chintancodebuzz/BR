@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import logo from "../../assets/logos/logo_white.svg";
 import OTPModal from "../models/otpModal";
-import NewPhoneInput from "../common/NewPhoneInput";
 import { useDispatch } from "react-redux";
 import { register, reqVerifyEmail } from "../../slices/authSlice";
 import { useToast } from "../../contexts/ToastContext";
@@ -22,6 +21,7 @@ import { toastEvents } from "../../utils/toastEventEmitter";
 import { isValidPhoneNumber } from "libphonenumber-js";
 
 import { APP_ROUTES } from "../../constants/appRoutes";
+import NewPhoneInput from "../common/NewPhoneInput";
 
 const Register = () => {
   const navigate = useNavigate();
