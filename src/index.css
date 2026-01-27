@@ -77,11 +77,11 @@ button {
 
 .animate-skeleton-theme {
   background: linear-gradient(90deg,
-      rgba(168, 116, 83, 0.1) 25%,
-      rgba(168, 116, 83, 0.2) 50%,
-      rgba(168, 116, 83, 0.1) 75%);
+      rgba(168, 116, 83, 0.15) 25%,
+      rgba(168, 116, 83, 0.3) 50%,
+      rgba(168, 116, 83, 0.15) 75%);
   background-size: 200% 100%;
-  animation: skeleton-shimmer 2s infinite linear;
+  animation: skeleton-shimmer 1.5s infinite linear;
 }
 
 @keyframes premium-bounce {
@@ -145,6 +145,16 @@ button {
 
 .animate-pulse-subtle {
   animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Smooth transitions should be applied specifically to elements using Tailwind classes like 'transition-all' */

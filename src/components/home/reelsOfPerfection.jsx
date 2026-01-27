@@ -9,13 +9,13 @@ import {
   EffectCoverflow,
 } from "swiper/modules";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
-import { ReelSkeleton } from "../common/Skeleton";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
+import { ReelSkeleton } from "../common/loading-skeletons";
 
 
 const ReelsOfPerfection = ({ reels, loading }) => {

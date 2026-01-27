@@ -4,6 +4,7 @@ import { toastEvents } from "../utils/toastEventEmitter";
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   "https://780kpdlv-2000.inc1.devtunnels.ms/web-api";
+console.log("🚀 ~ BASE_URL:", BASE_URL)
 
 const api = axios.create({
   baseURL: BASE_URL,

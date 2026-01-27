@@ -3,7 +3,7 @@ import col1 from "../../assets/home/collection_1.svg";
 import col2 from "../../assets/home/collection_2.svg";
 import col3 from "../../assets/home/collection_3.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { ProductSkeleton } from "../common/Skeleton";
+import { ProductSkeleton } from "../common/loading-skeletons";
 
 const TopSelling = ({ products: apiProducts, loading }) => {
   const navigate = useNavigate();

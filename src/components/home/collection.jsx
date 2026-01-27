@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import col1 from "../../assets/home/collection_1.svg";
 import col2 from "../../assets/home/collection_2.svg";
 import col3 from "../../assets/home/collection_3.svg";
-import { CollectionSkeleton } from "../common/Skeleton";
+import { CollectionSkeleton } from "../common/loading-skeletons";
 
 const Collection = ({ collections: apiCollections, loading }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);

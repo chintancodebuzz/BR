@@ -47,7 +47,6 @@ export default function Header() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // dispatch(getProfile());
       dispatch(fetchCart());
       dispatch(fetchWishlist());
     }
@@ -266,7 +265,7 @@ export default function Header() {
 
             {/* Book Now Button - Desktop */}
             <Link
-              to="/book-now"
+              to="/contact"
               className="bg-[#501F08] text-white px-3 py-2 xl:px-4 rounded-md font-semibold transition hover:bg-[#3a1606] shadow-md text-sm xl:text-base whitespace-nowrap"
             >
               BOOK NOW
@@ -353,7 +352,7 @@ export default function Header() {
             ) : (
               <Link
                 to={APP_ROUTES.LOGIN}
-                className="ml-2 group p-2 text-gray-600 hover:text-[#501F08] hover:bg-[#501F08]/5 rounded-full transition-all"
+                className="ml-2 group p-1.5 text-gray-600 hover:text-[#501F08] hover:bg-[#501F08]/5 rounded-full transition-all border border-[#501F08 ]"
                 aria-label="Login"
               >
                 <User size={22} />
@@ -562,7 +561,7 @@ export default function Header() {
 
               {/* Book Now Button - Mobile */}
               <Link
-                to="/book-now"
+                to="/contact"
                 className="bg-[#501F08] hover:bg-[#3a1606] text-white px-4 py-3 rounded-md font-semibold text-center shadow-md"
                 onClick={() => setMobileMenuOpen(false)}
               >
