@@ -72,8 +72,7 @@ const AccountOverviewContainer = () => {
                 setProfileImage(null);
                 setIsEditing(false);
             } catch (error) {
-                console.error("Update profile error:", error);
-
+                throw error;
             } finally {
                 setIsLoading(false);
             }

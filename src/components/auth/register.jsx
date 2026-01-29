@@ -559,7 +559,7 @@ const Register = () => {
         </div>
 
         {/* Custom animation styles */}
-        <style jsx global>{`
+        <style jsx="true" global="true">{`
           @keyframes spin-slow {
             from {
               transform: rotate(0deg);

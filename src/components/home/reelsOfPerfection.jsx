@@ -17,7 +17,6 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import { ReelSkeleton } from "../common/loading-skeletons";
 
-
 const ReelsOfPerfection = ({ reels, loading }) => {
   const swiperRef = useRef();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,8 +39,8 @@ const ReelsOfPerfection = ({ reels, loading }) => {
         {/* Swiper Container */}
         <div
           className="relative group"
-        // onMouseEnter={handleMouseEnter}
-        // onMouseLeave={handleMouseLeave}
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
         >
           {loading ? (
             <ReelSkeleton count={4} />
@@ -50,8 +49,13 @@ const ReelsOfPerfection = ({ reels, loading }) => {
               <div className="w-20 h-20 bg-[#501F08]/5 rounded-full flex items-center justify-center mb-6">
                 <Play className="w-10 h-10 text-[#501F08] opacity-20 fill-[#501F08]" />
               </div>
-              <h3 className="text-xl md:text-2xl font-black text-[#501F08] mb-2 tracking-tight uppercase">New Stories Loading</h3>
-              <p className="text-gray-500 text-sm italic">Our latest artistic reels are being prepared for your inspiration.</p>
+              <h3 className="text-xl md:text-2xl font-black text-[#501F08] mb-2 tracking-tight uppercase">
+                New Stories Loading
+              </h3>
+              <p className="text-gray-500 text-sm italic">
+                Our latest artistic reels are being prepared for your
+                inspiration.
+              </p>
             </div>
           ) : (
             <>
@@ -62,7 +66,7 @@ const ReelsOfPerfection = ({ reels, loading }) => {
                 slidesPerView={1.4}
                 centeredSlides={true}
                 loop={true}
-                Autoplay
+                autoplay
                 speed={800}
                 pagination={{
                   clickable: true,
@@ -145,7 +149,7 @@ const ReelsOfPerfection = ({ reels, loading }) => {
       </div>
 
       {/* Custom pagination bullets styling */}
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         .swiper-custom-bullet {
           width: 10px;
           height: 10px;

@@ -33,7 +33,6 @@ export const useAuthManager = () => {
         clearTimers();
 
         const handleLogout = (tokenType) => {
-            console.warn(`Token expired: ${tokenType}. Logging out...`);
             toastEvents.error(`Session expired (${tokenType}). Please login again.`, { title: "Session Expired" });
             dispatch(logoutUser());
             navigate("/login");
