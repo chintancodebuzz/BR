@@ -25,7 +25,7 @@ const AcademyView = ({
 }) => {
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#FDFDFD] py-20 px-6 md:px-12 lg:px-24">
+            <div className="min-h-screen bg-[#FDFDFD] py-10 md:py-20 px-4 md:px-12 lg:px-24">
                 <div className="space-y-20">
                     {/* Hero Skeleton */}
                     <div className="text-center space-y-6">
@@ -34,13 +34,13 @@ const AcademyView = ({
                         <Skeleton className="h-20 w-3/4 rounded-2xl mx-auto opacity-40" />
                     </div>
                     {/* Stats Skeleton */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
                         {[1, 2, 3, 4].map(i => (
-                            <div key={i} className="h-24 bg-white border border-gray-100 rounded-3xl p-6 flex items-center gap-4">
-                                <Skeleton className="w-12 h-12 rounded-xl" />
-                                <div className="space-y-2 flex-1">
-                                    <Skeleton className="h-6 w-1/2" />
-                                    <Skeleton className="h-3 w-1/3" />
+                            <div key={i} className="h-20 md:h-24 bg-white border border-gray-100 rounded-2xl md:rounded-3xl p-3 md:p-6 flex items-center gap-2 md:gap-4">
+                                <Skeleton className="w-10 h-10 md:w-12 md:h-12 rounded-xl" />
+                                <div className="space-y-1 md:space-y-2 flex-1">
+                                    <Skeleton className="h-5 md:h-6 w-1/2" />
+                                    <Skeleton className="h-2 md:h-3 w-1/3 opacity-40" />
                                 </div>
                             </div>
                         ))}
@@ -71,7 +71,7 @@ const AcademyView = ({
                 {[...Array(6)].map((_, i) => (
                     <div
                         key={i}
-                        className="absolute opacity-5"
+                        className="absolute opacity-5 hidden md:block"
                         style={{
                             top: `${20 + i * 15}%`,
                             left: i % 2 === 0 ? `${5 + i * 8}%` : `${85 - i * 8}%`,
@@ -87,7 +87,7 @@ const AcademyView = ({
                 <div className="absolute bottom-10 left-1/4 w-96 h-96 bg-linear-to-l from-[#501F08]/5 to-[#9e5d61]/5 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="relative mx-auto px-6 md:px-12 lg:px-24 py-20">
+            <div className="relative mx-auto px-4 md:px-12 lg:px-24 py-10 md:py-20">
                 {/* Hero Section */}
                 <div className="text-center mb-16">
                     <div className="inline-block mb-4">
@@ -95,9 +95,9 @@ const AcademyView = ({
                             PREMIUM NAIL EDUCATION
                         </span>
                     </div>
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#501F08] mb-6  leading-tight">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#501F08] mb-4 md:mb-6 leading-tight">
                         BR NAILS
-                        <span className="block text-2xl md:text-3xl lg:text-4xl text-[#9e5d61] mt-2">
+                        <span className="block text-xl md:text-3xl lg:text-4xl text-[#9e5d61] mt-1 md:mt-2">
                             ACADEMY
                         </span>
                     </h1>
@@ -110,7 +110,7 @@ const AcademyView = ({
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-20">
                     {[
                         {
                             value: "500+",
@@ -137,15 +137,17 @@ const AcademyView = ({
                             key={index}
                             className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
                         >
-                            <div className="flex items-center space-x-4">
-                                <div className="p-3 rounded-xl bg-linear-to-r from-[#501F08]/10 to-[#9e5d61]/10 text-[#501F08]">
+                            <div className="flex items-center space-x-2 md:space-x-4">
+                                <div className="p-2 md:p-3 rounded-xl bg-linear-to-r from-[#501F08]/10 to-[#9e5d61]/10 text-[#501F08] shrink-0">
                                     {stat.icon}
                                 </div>
                                 <div>
-                                    <div className="text-3xl font-bold text-[#501F08]">
+                                    <div className="text-lg md:text-3xl font-bold text-[#501F08] leading-tight">
                                         {stat.value}
                                     </div>
-                                    <div className="text-sm text-gray-600">{stat.label}</div>
+                                    <div className="text-[10px] md:text-sm text-gray-600 leading-tight">
+                                        {stat.label}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +157,7 @@ const AcademyView = ({
                 {/* Courses Section */}
                 <div className="mb-20">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-[#333333] mb-4">
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#333333] mb-4">
                             Master the Art of Nails
                         </h2>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -168,7 +170,7 @@ const AcademyView = ({
                         {courses.map((course, index) => (
                             <div
                                 key={course.id}
-                                className={`relative group cursor-pointer transition-all duration-500 ${selectedCourse === index ? "scale-105 z-10" : ""
+                                className={`relative group cursor-pointer transition-all duration-500 ${selectedCourse === index ? "md:scale-105 z-10" : ""
                                     }`}
                                 onClick={() => setSelectedCourse(index)}
                             >
@@ -203,7 +205,7 @@ const AcademyView = ({
 
                                         {/* Course Details */}
                                         <div className="space-y-3 mb-6">
-                                            <div className="flex items-center space-x-2 text-gray-600">
+                                            <div className="flex items-center space-x-2 text-gray-600 text-sm">
                                                 <Calendar className="w-4 h-4" />
                                                 <span>{course.duration}</span>
                                             </div>
@@ -278,7 +280,7 @@ const AcademyView = ({
                         {features.map((feature, index) => (
                             <div
                                 key={index}
-                                className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/50 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+                                className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-white/50 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
                             >
                                 <div className="mb-4">
                                     <div className="p-4 rounded-xl bg-linear-to-r from-[#501F08]/10 to-[#9e5d61]/10 text-[#501F08] inline-block">
@@ -317,7 +319,7 @@ const AcademyView = ({
                                 className="relative group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/50 transition-all duration-300 hover:shadow-xl"
                             >
                                 {/* Quote Mark */}
-                                <div className="absolute top-6 right-6 text-[#501F08]/20 text-6xl font-serif">
+                                <div className="absolute top-2 right-4 text-[#501F08]/10 text-6xl font-serif">
                                     "
                                 </div>
 

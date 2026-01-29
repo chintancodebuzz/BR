@@ -21,7 +21,7 @@ export default function TopBar() {
         {[...displaySlogans, ...displaySlogans].map((text, i) => (
           <span
             key={i}
-            className="text-white px-6 py-1 text-sm md:text-[16px] font-normal"
+            className="text-white px-6 py-1 text-sm md:text-[14px] font-light"
           >
             {text}
           </span>

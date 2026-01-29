@@ -1,14 +1,17 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { fetchProducts, setViewMode, setCurrentPage } from "../../../slices/productSlice";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { fetchProducts, setViewMode, setCurrentPage, clearFilters } from "../../../slices/productSlice";
 import ProductView from "../view/product.view";
 
 const ProductContainer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isFilterOpen, setIsFilterOpen] = useState(true);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
     const observer = useRef();
+
+    const [searchParams] = useSearchParams();
+    const collectionId = searchParams.get("collectionId");
 
     const {
         products,
@@ -20,19 +23,27 @@ const ProductContainer = () => {
         totalItems
     } = useSelector((state) => state.product);
 
-    // Initial Fetch
+    // Initial Fetch & collectionId Change
     useEffect(() => {
-        dispatch(fetchProducts({ page: 1 }));
-    }, [dispatch]);
+        dispatch(fetchProducts({
+            page: 1,
+            limit: itemsPerPage,
+            collectionId: collectionId || undefined
+        }));
+    }, [dispatch, collectionId]);
 
     // Handle Infinite Scroll
     const loadMoreProducts = useCallback(() => {
         if (!loading && products.length < totalItems) {
             const nextPage = currentPage + 1;
             dispatch(setCurrentPage(nextPage));
-            dispatch(fetchProducts({ page: nextPage }));
+            dispatch(fetchProducts({
+                page: nextPage,
+                limit: itemsPerPage,
+                collectionId: collectionId || undefined
+            }));
         }
-    }, [dispatch, loading, products.length, totalItems, currentPage]);
+    }, [dispatch, loading, products.length, totalItems, currentPage, collectionId]);
 
     const lastProductElementRef = useCallback(node => {
         if (loading) return;

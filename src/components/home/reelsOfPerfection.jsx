@@ -22,90 +22,92 @@ const ReelsOfPerfection = ({ reels, loading }) => {
   const swiperRef = useRef();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Fallback data if needed
-  const videoReels = [
-    // ... keep existing static data if desired for fallback, or defined outside
-    { id: 1, thumbnail: "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1974&auto=format&fit=crop" },
-    { id: 2, thumbnail: "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1974&auto=format&fit=crop" },
-    { id: 3, thumbnail: "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1974&auto=format&fit=crop" },
-  ];
-
   // Pause auto play on hover
-  const handleMouseEnter = () => setIsAutoPlaying(false);
-  const handleMouseLeave = () => setIsAutoPlaying(true);
+  // const handleMouseEnter = () => setIsAutoPlaying(false);
+  // const handleMouseLeave = () => setIsAutoPlaying(true);
 
   return (
     <section className="bg-background py-10 md:py-12 relative overflow-hidden">
-      <div className="mx-auto px-6 md:px-12 lg:px-24 relative">
+      <div className="mx-auto px-4 md:px-12 lg:px-24 relative">
         {/* Title Section */}
         <div className="text-center mb-12">
           <h2 className="text-[32px] text-[#501F08] mb-1 font-bold leading-13">
             Reels of Perfection
           </h2>
-          <div className="w-72 h-1.5 bg-linear-to-r from-accent via-primary to-accent mx-auto rounded-full"></div>
+          <div className="w-72 h-1 bg-linear-to-r from-accent via-primary to-accent mx-auto rounded-full"></div>
         </div>
 
         {/* Swiper Container */}
         <div
           className="relative group"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
         >
           {loading ? (
             <ReelSkeleton count={4} />
+          ) : !reels || reels.length === 0 ? (
+            <div className="text-center py-12 px-6 bg-white/30 backdrop-blur-sm rounded-[40px] border border-gray-100/50 max-w-2xl mx-auto flex flex-col items-center">
+              <div className="w-20 h-20 bg-[#501F08]/5 rounded-full flex items-center justify-center mb-6">
+                <Play className="w-10 h-10 text-[#501F08] opacity-20 fill-[#501F08]" />
+              </div>
+              <h3 className="text-xl md:text-2xl font-black text-[#501F08] mb-2 tracking-tight uppercase">New Stories Loading</h3>
+              <p className="text-gray-500 text-sm italic">Our latest artistic reels are being prepared for your inspiration.</p>
+            </div>
           ) : (
-            <Swiper
-              ref={swiperRef}
-              modules={[Navigation, Pagination, EffectCoverflow]}
-              spaceBetween={16}
-              slidesPerView={1.1}
-              centeredSlides={true}
-              loop={true}
-              Autoplay
-              speed={800} // Smooth transition speed
-              pagination={{
-                clickable: true,
-                bulletClass: "swiper-custom-bullet",
-                bulletActiveClass: "swiper-custom-bullet-active",
-              }}
-              onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper;
-              }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 24,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 28,
-                },
-                1280: {
-                  slidesPerView: 4,
-                  spaceBetween: 32,
-                },
-              }}
-              className="pb-16!"
-              effect="coverflow"
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2.5,
-                slideShadows: false,
-              }}
-            >
-              {/* Map API reels */}
-              {reels && reels.length > 0 ? (
-                reels.map((reel, index) => (
+            <>
+              <Swiper
+                ref={swiperRef}
+                modules={[Navigation, Pagination, EffectCoverflow]}
+                spaceBetween={12}
+                slidesPerView={1.4}
+                centeredSlides={true}
+                loop={true}
+                Autoplay
+                speed={800}
+                pagination={{
+                  clickable: true,
+                  bulletClass: "swiper-custom-bullet",
+                  bulletActiveClass: "swiper-custom-bullet-active",
+                }}
+                onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                breakpoints={{
+                  480: {
+                    slidesPerView: 1.8,
+                    spaceBetween: 16,
+                  },
+                  640: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 28,
+                  },
+                  1440: {
+                    slidesPerView: 5,
+                    spaceBetween: 32,
+                  },
+                }}
+                className="pb-16!"
+                effect="coverflow"
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: 0,
+                  depth: 60,
+                  modifier: 2,
+                  slideShadows: false,
+                }}
+              >
+                {reels.map((reel, index) => (
                   <SwiperSlide key={`${reel.id}-${index}`}>
-                    <div className="relative rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ease-out group cursor-pointer h-[650px]">
-                      {/* Video with Autoplay */}
+                    <div className="relative rounded-2xl overflow-hidden shadow-lg transition-all duration-500 ease-out group cursor-pointer aspect-9/16 w-full max-h-[700px] mx-auto">
                       <div className="relative w-full h-full">
                         <video
                           src={reel.reel}
@@ -115,42 +117,30 @@ const ReelsOfPerfection = ({ reels, loading }) => {
                           playsInline
                           className="w-full h-full object-cover"
                         />
-
-                        {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/60 opacity-60 group-hover:opacity-40 transition-opacity duration-300"></div>
                       </div>
                     </div>
                   </SwiperSlide>
-                ))
-              ) : (
-                // Fallback static (if needed, or just empty)
-                videoReels.map((reel, index) => (
-                  <SwiperSlide key={`${reel.id}-${index}`}>
-                    {/* Keep existing fallback structure or update to video? Let's keep it simple or hide if no data */}
-                    <div className="relative rounded-2xl overflow-hidden shadow-lg h-[500px]">
-                      <img src={reel.thumbnail} className="w-full h-full object-cover" alt={reel.title} />
-                    </div>
-                  </SwiperSlide>
-                ))
-              )}
-            </Swiper>
+                ))}
+              </Swiper>
+
+              <button
+                className="swiper-button-prev absolute -left-6! top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#f6e6d6] hover:bg-[#f6e6d6] text-[#501f08] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+                aria-label="Previous slide"
+                onClick={() => swiperRef.current?.slidePrev()}
+              >
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-[#501f08] pr-1" />
+              </button>
+
+              <button
+                className="swiper-button-next absolute -right-6! top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#f6e6d6] hover:bg-[#f6e6d6] text-[#501f08] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+                aria-label="Next slide"
+                onClick={() => swiperRef.current?.slideNext()}
+              >
+                <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-[#501f08] pl-1" />
+              </button>
+            </>
           )}
-
-          <button
-            className="swiper-button-prev absolute -left-6! top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#f6e6d6] hover:bg-[#f6e6d6] text-[#501f08] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
-            aria-label="Previous slide"
-            onClick={() => swiperRef.current?.slidePrev()}
-          >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-[#501f08] pr-1" />
-          </button>
-
-          <button
-            className="swiper-button-next absolute -right-6! top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-[#f6e6d6] hover:bg-[#f6e6d6] text-[#501f08] rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
-            aria-label="Next slide"
-            onClick={() => swiperRef.current?.slideNext()}
-          >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-[#501f08] pl-1" />
-          </button>
         </div>
       </div>
 

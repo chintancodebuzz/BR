@@ -1,10 +1,11 @@
+import React, { forwardRef } from "react";
 import { Heart, ShoppingCart, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCart } from "../../slices/cartSlice";
 import { addToWishlist, fetchWishlist, removeFromWishlist } from "../../slices/wishlistSlice";
 
-export default function ProductCard({ product, viewMode = 'grid' }) {
+const ProductCard = forwardRef(({ product, viewMode = 'grid' }, ref) => {
     const dispatch = useDispatch();
     const { items: wishlistItems } = useSelector((state) => state.wishlist);
     const { items: cartItems } = useSelector((state) => state.cart);
@@ -52,7 +53,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
 
     if (!isGridView) {
         return (
-            <div className="bg-white rounded-[24px] border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 group">
+            <div ref={ref} className="bg-white rounded-[24px] border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 group">
                 <div className="flex flex-col sm:flex-row gap-6 p-4">
                     <div className="relative w-full sm:w-48 aspect-square rounded-[18px] overflow-hidden bg-gray-50 shrink-0 border border-gray-100 cursor-pointer" onClick={() => navigate(`/products/${productId}`)}>
                         <img
@@ -79,14 +80,14 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                                         {name}
                                     </h3>
                                 </div>
-                                <button
+                                {/* <button
                                     onClick={handleWishlist}
                                     className="p-2.5 rounded-full bg-gray-50 hover:bg-red-50 transition-colors"
                                 >
                                     <Heart
                                         className={`w-5 h-5 transition-colors ${isInWishlist ? 'fill-[#501F08] text-[#501F08]' : 'text-gray-300'}`}
                                     />
-                                </button>
+                                </button> */}
                             </div>
 
                             <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
@@ -103,7 +104,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                             </div>
                         </div>
 
-                        <div className="flex gap-4">
+                        {/* <div className="flex gap-4">
                             <button
                                 onClick={isInCart ? () => navigate('/cart') : handleAddToCart}
                                 className={`relative group/btn overflow-hidden border-2 ${isInCart ? 'border-emerald-500 text-emerald-500 hover:text-white' : 'border-[#501F08] text-[#501F08] hover:text-white'} py-3 px-6 rounded-xl font-black text-xs tracking-[0.15em] transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 uppercase w-max`}
@@ -124,7 +125,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                                 </span>
                             </button>
 
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -133,7 +134,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
 
     // Grid View - Small & Standard
     return (
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 group flex flex-col h-full">
+        <div ref={ref} className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 group flex flex-col h-full">
             <div className="relative aspect-square overflow-hidden bg-gray-50">
                 <img
                     src={displayImage}
@@ -150,49 +151,40 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                     </div>
                 )}
 
-                <button
+                {/* <button
                     onClick={handleWishlist}
                     className={`absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm transition-opacity duration-300 ${isInWishlist ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 hover:bg-gray-50'}`}
                 >
                     <Heart
                         className={`w-4 h-4 transition-colors ${isInWishlist ? 'fill-[#501F08] text-[#501F08]' : 'text-[#501F08]'}`}
                     />
-                </button>
-
-                {/* <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <Link
-                        to={`/products/${productId}`}
-                        className="bg-white text-[#501F08] py-2 px-4 rounded-lg font-bold text-[10px]  hover:bg-[#501F08] hover:text-white transition-all shadow-md uppercase"
-                    >
-                        View Details
-                    </Link>
-                </div> */}
+                </button> */}
             </div>
 
-            <div className="p-4 flex flex-col flex-1">
+            <div className="p-3 sm:p-4 flex flex-col flex-1">
                 <div className="flex-1">
-                    <p className="text-[10px] font-bold text-[#A87453] uppercase mb-1 opacity-70">
+                    <p className="text-[9px] sm:text-[10px] font-bold text-[#A87453] uppercase mb-0.5 sm:mb-1 opacity-70">
                         {product.collectionTitle || product.category || 'Luxury Collection'}
                     </p>
-                    <h3 className="text-sm font-bold text-gray-900 mb-2 group-hover:text-[#501F08] transition-colors line-clamp-2">
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 mb-1.5 sm:mb-2 group-hover:text-[#501F08] transition-colors line-clamp-2">
                         {name}
                     </h3>
 
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className="text-lg font-bold text-[#501F08]">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                        <span className="text-base sm:text-lg font-bold text-[#501F08]">
                             ₹{sellingPrice.toLocaleString()}
                         </span>
                         {originalPrice && originalPrice > sellingPrice && (
-                            <span className="text-xs text-gray-400 line-through opacity-60">
+                            <span className="text-[10px] sm:text-xs text-gray-400 line-through opacity-60">
                                 ₹{originalPrice.toLocaleString()}
                             </span>
                         )}
                     </div>
                 </div>
 
-                <button
+                {/* <button
                     onClick={isInCart ? () => navigate('/cart') : handleAddToCart}
-                    className={`w-full relative group/btn overflow-hidden border-2 ${isInCart ? 'border-emerald-600 text-emerald-700 hover:text-white' : 'border-[#501F08] text-[#501F08] hover:text-white'} py-2.5 px-4 rounded-xl font-black text-[10px] tracking-[0.15em] transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 uppercase`}
+                    className={`w-full relative group/btn overflow-hidden border-2 ${isInCart ? 'border-emerald-600 text-emerald-700 hover:text-white' : 'border-[#501F08] text-[#501F08] hover:text-white'} py-2 sm:py-2.5 px-4 rounded-xl font-black text-[10px] tracking-[0.15em] transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 uppercase`}
                 >
                     <div className={`absolute inset-0 ${isInCart ? 'bg-emerald-600' : 'bg-[#501F08]'} transform origin-left scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300`}></div>
                     <span className="relative z-10 flex items-center gap-2">
@@ -208,8 +200,10 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
                             </>
                         )}
                     </span>
-                </button>
+                </button> */}
             </div>
         </div>
     );
-}
+});
+
+export default ProductCard;

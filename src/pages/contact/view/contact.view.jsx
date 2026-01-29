@@ -14,7 +14,7 @@ const ContactView = ({
 }) => {
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#FDFDFD] py-20 px-6 md:px-12 lg:px-24">
+            <div className="min-h-screen bg-[#FDFDFD] py-10 md:py-20 px-4 md:px-12 lg:px-24">
                 <ContactSkeleton />
             </div>
         );
@@ -37,14 +37,14 @@ const ContactView = ({
                 </div>
             </div>
 
-            <div className="relative mx-auto px-6 md:px-12 lg:px-24 py-20">
+            <div className="relative mx-auto px-4 md:px-12 lg:px-24 py-10 md:py-20">
                 {/* Header */}
                 <div className="text-center mb-16">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#501F08] mb-4 ">
                         GET IN TOUCH
                     </h1>
                     <div className="relative inline-block">
-                        <div className="w-72 h-1.5 bg-linear-to-r from-accent via-primary to-accent mx-auto rounded-full mb-12"></div>
+                        <div className="w-72 h-1 bg-linear-to-r from-accent via-primary to-accent mx-auto rounded-full mb-12"></div>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                             Let's create something beautiful together. Reach out for
                             appointments, inquiries, or just to say hello!
@@ -57,9 +57,8 @@ const ContactView = ({
                     <div className="space-y-8">
                         <h2 className="text-3xl font-bold text-[#501F08] mb-8">
                             Contact Information
-                            <div className="w-72 h-1.5 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full mx-auto lg:mx-0 mt-2"></div>
+                            <div className="w-72 h-1 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full mx-auto lg:mx-0 mt-2"></div>
                         </h2>
-
                         <div className="grid md:grid-cols-2 gap-6">
                             {contactInfo.map((item, index) => (
                                 <div

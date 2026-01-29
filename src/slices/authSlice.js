@@ -58,24 +58,39 @@ export const register = createAsyncThunk(
       const currentOtpToken = localStorage.getItem("otpVerificationToken");
       const response = await authApi.registerUser(userData);
 
+      // Check for authentication data in response or fallback to OTP token
       const authData = response.data?.data?.authentication || response.data?.authentication;
+      const accessToken = authData?.accessToken || currentOtpToken;
+      const refreshToken = authData?.refreshToken || currentOtpToken;
 
-      if (authData?.accessToken) {
-        localStorage.setItem("accessToken", authData.accessToken);
-        localStorage.setItem("refreshToken", authData.refreshToken);
-        const userToStore = response.data.data || response.data;
-        localStorage.setItem("user", JSON.stringify(userToStore));
-      } else if (currentOtpToken) {
-        localStorage.setItem("accessToken", currentOtpToken);
-        localStorage.setItem("refreshToken", currentOtpToken);
-        const userToStore = response.data.data || response.data;
-        localStorage.setItem("user", JSON.stringify(userToStore));
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
       }
+
+
+      let finalUserData = response.data?.data || response.data;
+
+      if (accessToken && response.data.status && !finalUserData.name) {
+        try {
+          const profileRes = await authApi.getUserProfile();
+          finalUserData = profileRes.data.data || profileRes.data;
+        } catch (profileErr) {
+          console.error("❌ ~ Failed to fetch profile after registration:", profileErr);
+        }
+      }
+
+      localStorage.setItem("user", JSON.stringify(finalUserData));
 
       // Clear the OTP token after successful registration and promotion
       localStorage.removeItem("otpVerificationToken");
 
-      return response.data;
+      // Return combined data for the reducer to handle
+      return {
+        ...response.data,
+        user: finalUserData,
+        authentication: authData || (accessToken ? { accessToken, refreshToken } : null)
+      };
     } catch (error) {
       console.error("❌ ~ Registration error in authSlice:", {
         message: error.message,
@@ -370,20 +385,26 @@ const authSlice = createSlice({
         state.registerSuccess = true;
 
         // Auto-login updates
-        const authData = action.payload?.data?.authentication || action.payload?.authentication;
-        const accessToken = authData?.accessToken || localStorage.getItem("accessToken");
-        const refreshToken = authData?.refreshToken || localStorage.getItem("refreshToken");
+        const authData = action.payload?.authentication;
+        const accessToken =
+          authData?.accessToken ||
+          state.accessToken ||
+          localStorage.getItem("accessToken");
+        const refreshToken =
+          authData?.refreshToken ||
+          state.refreshToken ||
+          localStorage.getItem("refreshToken");
 
         if (accessToken) {
           state.isAuthenticated = true;
           state.accessToken = accessToken;
           state.refreshToken = refreshToken;
-          state.user = action.payload.data || action.payload;
+          // Use the user data from the payload if provided, otherwise fallback to existing response structure
+          state.user =
+            action.payload.user || action.payload.data || action.payload;
         }
 
-        state.message =
-          action.payload.message ||
-          "Registration successful!";
+        state.message = action.payload.message || "Registration successful!";
       })
       .addCase(register.rejected, (state, action) => {
         state.registerLoading = false;

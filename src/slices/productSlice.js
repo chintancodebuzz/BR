@@ -46,7 +46,7 @@ const initialState = {
 
     // Pagination
     currentPage: 1,
-    itemsPerPage: 12,
+    itemsPerPage: 8,
     totalItems: 0,
 };
 
