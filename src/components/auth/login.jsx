@@ -15,7 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const { loginLoading, isAuthenticated, user } = useSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
 
   const [showPassword, setShowPassword] = useState(false);
@@ -123,22 +123,29 @@ const Login = () => {
                 <div className="relative group">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className={`h-5 w-5 ${formik.touched.email && formik.errors.email ? "text-red-400" : "text-gray-400"}`} />
+                      <Mail
+                        className={`h-5 w-5 ${formik.touched.email && formik.errors.email ? "text-red-400" : "text-gray-400"}`}
+                      />
                     </div>
                     <input
                       type="email"
                       name="email"
                       {...formik.getFieldProps("email")}
-                      className={`w-full pl-10 pr-3 py-3 bg-white border ${formik.touched.email && formik.errors.email
-                        ? "border-red-300 focus:ring-red-200"
-                        : "border-gray-300 focus:ring-[#501F08]"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                      className={`w-full pl-10 pr-3 py-3 bg-white border ${
+                        formik.touched.email && formik.errors.email
+                          ? "border-red-300 focus:ring-red-200"
+                          : "border-gray-300 focus:ring-[#501F08]"
+                      } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                       placeholder="Email address"
                     />
-                    <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent ${formik.touched.email && formik.errors.email ? "via-red-500" : "via-[#501F08]"} to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300`}></div>
+                    <div
+                      className={`absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent ${formik.touched.email && formik.errors.email ? "via-red-500" : "via-[#501F08]"} to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300`}
+                    ></div>
                   </div>
                   {formik.touched.email && formik.errors.email && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.email}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {formik.errors.email}
+                    </p>
                   )}
                 </div>
 
@@ -146,16 +153,19 @@ const Login = () => {
                 <div className="relative group">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className={`h-5 w-5 ${formik.touched.password && formik.errors.password ? "text-red-400" : "text-gray-400"}`} />
+                      <Lock
+                        className={`h-5 w-5 ${formik.touched.password && formik.errors.password ? "text-red-400" : "text-gray-400"}`}
+                      />
                     </div>
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
                       {...formik.getFieldProps("password")}
-                      className={`w-full pl-10 pr-10 py-3 bg-white border ${formik.touched.password && formik.errors.password
-                        ? "border-red-300 focus:ring-red-200"
-                        : "border-gray-300 focus:ring-[#501F08]"
-                        } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
+                      className={`w-full pl-10 pr-10 py-3 bg-white border ${
+                        formik.touched.password && formik.errors.password
+                          ? "border-red-300 focus:ring-red-200"
+                          : "border-gray-300 focus:ring-[#501F08]"
+                      } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm`}
                       placeholder="Password"
                     />
                     <button
@@ -169,10 +179,14 @@ const Login = () => {
                         <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
                       )}
                     </button>
-                    <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent ${formik.touched.password && formik.errors.password ? "via-red-500" : "via-[#501F08]"} to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300`}></div>
+                    <div
+                      className={`absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent ${formik.touched.password && formik.errors.password ? "via-red-500" : "via-[#501F08]"} to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-300`}
+                    ></div>
                   </div>
                   {formik.touched.password && formik.errors.password && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{formik.errors.password}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {formik.errors.password}
+                    </p>
                   )}
                 </div>
 
@@ -273,7 +287,7 @@ const Login = () => {
       </div>
 
       {/* Add custom animation */}
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         @keyframes spin-slow {
           from {
             transform: rotate(0deg);

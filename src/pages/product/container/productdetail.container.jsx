@@ -91,7 +91,7 @@ const ProductDetailContainer = () => {
                 await dispatch(fetchWishlist());
             }
         } catch (err) {
-            console.error(err);
+            throw err;
         }
     };
 
@@ -107,7 +107,7 @@ const ProductDetailContainer = () => {
             await dispatch(addToCart({ productId, quantity })).unwrap();
             await dispatch(fetchCart());
         } catch (err) {
-            console.error(err?.message || "Failed to add to cart");
+            throw err;
         }
     };
 
@@ -135,7 +135,7 @@ const ProductDetailContainer = () => {
             ).unwrap();
             await dispatch(fetchCart());
         } catch (err) {
-            console.error(err?.message || "Failed to update quantity");
+            throw err;
         }
     };
 

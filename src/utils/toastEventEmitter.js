@@ -15,7 +15,7 @@ class ToastEventEmitter {
             try {
                 listener({ type, message, options });
             } catch (error) {
-                console.error("Error in toast listener:", error);
+                throw error;
             }
         });
     }

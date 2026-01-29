@@ -101,7 +101,7 @@ export const useCheckout = () => {
                 dispatch(fetchCart());
             }
         } catch (error) {
-            console.error("Failed to place order:", error);
+            throw error;
         }
     };
 

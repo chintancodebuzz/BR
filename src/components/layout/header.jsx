@@ -14,7 +14,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  console.log("------------------------1234>", user);
   const { collections } = useSelector((state) => state.home);
   const { items: cartItems } = useSelector((state) => state.cart);
   const { items: wishlistItems } = useSelector((state) => state.wishlist);
@@ -82,10 +81,11 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-50">
       <header
-        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${scrolled
-          ? "backdrop-blur-md shadow-lg top-7"
-          : "backdrop-blur-md shadow-lg top-7"
-          } `}
+        className={`fixed left-0 w-full z-40 transition-all duration-300 ease-in-out ${
+          scrolled
+            ? "backdrop-blur-md shadow-lg top-7"
+            : "backdrop-blur-md shadow-lg top-7"
+        } `}
       >
         <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-0.5 flex items-center justify-between">
           {/* Logo */}
@@ -103,7 +103,8 @@ export default function Header() {
               to={APP_ROUTES.HOME}
               end
               className={({ isActive }) =>
-                `hover:text-[#501F08] relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-[#501F08] relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -220,7 +221,7 @@ export default function Header() {
               )}
             </div>
 
-            <style jsx>{`
+            <style jsx="true">{`
               .custom-scrollbar::-webkit-scrollbar {
                 display: none;
               }
@@ -234,7 +235,8 @@ export default function Header() {
             <NavLink
               to="/academy"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -243,7 +245,8 @@ export default function Header() {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `hover:text-gray-900 relative transition-colors ${isActive ? activeClass : "after:hidden"
+                `hover:text-gray-900 relative transition-colors ${
+                  isActive ? activeClass : "after:hidden"
                 }`
               }
             >
@@ -395,7 +398,8 @@ export default function Header() {
                 to={APP_ROUTES.HOME}
                 end
                 className={({ isActive }) =>
-                  `hover:text-[#501F08] py-2.5 border-b text-sm ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-[#501F08] py-2.5 border-b text-sm ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -515,7 +519,7 @@ export default function Header() {
                 )}
               </div>
 
-              <style jsx>{`
+              <style jsx="true">{`
                 .custom-scrollbar-mobile::-webkit-scrollbar {
                   display: none;
                 }
@@ -529,7 +533,8 @@ export default function Header() {
               <NavLink
                 to="/academy"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}
@@ -539,7 +544,8 @@ export default function Header() {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `hover:text-gray-900 py-2.5 border-b ${isActive ? "font-semibold text-[#501F08]" : ""
+                  `hover:text-gray-900 py-2.5 border-b ${
+                    isActive ? "font-semibold text-[#501F08]" : ""
                   }`
                 }
                 onClick={() => setMobileMenuOpen(false)}

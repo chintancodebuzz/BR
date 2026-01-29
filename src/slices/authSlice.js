@@ -76,7 +76,7 @@ export const register = createAsyncThunk(
           const profileRes = await authApi.getUserProfile();
           finalUserData = profileRes.data.data || profileRes.data;
         } catch (profileErr) {
-          console.error("❌ ~ Failed to fetch profile after registration:", profileErr);
+          throw profileErr;
         }
       }
 
@@ -92,12 +92,6 @@ export const register = createAsyncThunk(
         authentication: authData || (accessToken ? { accessToken, refreshToken } : null)
       };
     } catch (error) {
-      console.error("❌ ~ Registration error in authSlice:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
-
       return rejectWithValue(
         error.response?.data || {
           message: error.message || "Registration failed. Please try again.",

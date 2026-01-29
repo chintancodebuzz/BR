@@ -142,7 +142,7 @@ const About = () => {
       <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-[#501F08] via-[#8b3b14] to-[#501F08]"></div>
 
       {/* Animation Keyframes */}
-      <style jsx>{`
+      <style jsx="true">{`
         @keyframes float {
           0%,
           100% {
