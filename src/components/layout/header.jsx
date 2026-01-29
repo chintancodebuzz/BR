@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/home/logo.svg";
+import logo from "../../assets/logos/B_Logo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../slices/authSlice";
 import { fetchCollections } from "../../slices/homeSlice";
 import { APP_ROUTES } from "../../constants/appRoutes";
 import LogoutModal from "../models/LogoutModal";
-import { User, LogOut, Heart, ShoppingCart } from "lucide-react";
+import { User, LogOut, Heart, ShoppingCart, Menu, X } from "lucide-react";
 import { fetchCart } from "../../slices/cartSlice";
 import { fetchWishlist } from "../../slices/wishlistSlice";
 import DefaultProfile from "../../assets/home/default-profile.svg";
@@ -55,6 +55,7 @@ export default function Header() {
   useEffect(() => {
     dispatch(fetchCollections());
   }, [dispatch]);
+
   const handleLogout = () => {
     setShowLogoutModal(true);
   };
@@ -75,9 +76,8 @@ export default function Header() {
     return name.substring(0, 2).toUpperCase();
   };
 
-  // Tailwind classes for active animation
   const activeClass =
-    "after:block after:w-full after:h-1 after:bg-[#501F08] after:rounded-full after:transition-all";
+    "after:block after:w-full after:h-[3px] after:bg-[#501F08] after:rounded-full after:transition-all";
 
   return (
     <div className="sticky top-0 z-50">
@@ -87,13 +87,13 @@ export default function Header() {
           : "backdrop-blur-md shadow-lg top-7"
           } `}
       >
-        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-1 flex items-center justify-between">
+        <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-0.5 flex items-center justify-between">
           {/* Logo */}
           <Link to={APP_ROUTES.HOME} className="shrink-0">
             <img
               src={logo}
               alt="BR Nails Logo"
-              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 rounded-full"
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-15 md:w-15 lg:h-16 lg:w-16 rounded-full shadow-sm"
             />
           </Link>
 
@@ -143,7 +143,7 @@ export default function Header() {
                           collections.map((collection, index) => (
                             <Link
                               key={collection._id || collection.id}
-                              to={`/products?collection=${collection.name || collection.title}`}
+                              to={`/products?collectionId=${collection._id || collection.id}`}
                               className="group/item block relative"
                               onClick={() => setDesktopProductsOpen(false)}
                             >
@@ -253,7 +253,7 @@ export default function Header() {
 
           {/* Desktop Buttons Container */}
           <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
-            <Link
+            {/* <Link
               to="/products"
               className="relative group px-3 py-1.5 xl:px-4 overflow-hidden rounded-md bg-transparent border-2 border-[#501F08] text-[#501F08] font-semibold transition-all duration-300 hover:text-white text-sm xl:text-base"
             >
@@ -261,19 +261,18 @@ export default function Header() {
               <span className="relative z-10 whitespace-nowrap">
                 BULK ORDER
               </span>
-            </Link>
+            </Link> */}
 
             {/* Book Now Button - Desktop */}
             <Link
               to="/contact"
-              className="bg-[#501F08] text-white px-3 py-2 xl:px-4 rounded-md font-semibold transition hover:bg-[#3a1606] shadow-md text-sm xl:text-base whitespace-nowrap"
+              className="bg-[#501F08] text-white px-3 py-2 xl:px-4 rounded-md font-light transition hover:bg-[#3a1606] shadow-md text-sm xl:text-base whitespace-nowrap"
             >
-              BOOK NOW
+              BOOK APPOINTMENT
             </Link>
 
             {/* Cart & Wishlist Icons */}
-            <div className="flex items-center gap-2 ml-1 xl:ml-2">
-              {/* Wishlist */}
+            {/* <div className="flex items-center gap-2 ml-1 xl:ml-2">
               <Link
                 to="/wishlist"
                 className="group relative p-2.5 text-gray-700 hover:text-[#501F08] bg-gray-50/50 hover:bg-[#501F08]/10 rounded-2xl border border-gray-100 hover:border-[#501F08]/20 transition-all active:scale-95 shadow-sm"
@@ -290,7 +289,6 @@ export default function Header() {
                 )}
               </Link>
 
-              {/* Cart */}
               <Link
                 to="/cart"
                 className="group relative p-2.5 text-gray-700 hover:text-[#501F08] bg-gray-50/50 hover:bg-[#501F08]/10 rounded-2xl border border-gray-100 hover:border-[#501F08]/20 transition-all active:scale-95 shadow-sm"
@@ -303,10 +301,10 @@ export default function Header() {
                   </span>
                 )}
               </Link>
-            </div>
+            </div> */}
 
             {/* Login / User Profile - Desktop */}
-            {isAuthenticated ? (
+            {/* {isAuthenticated ? (
               <div className="relative group ml-2">
                 <button className="flex items-center gap-2 text-[#501F08] font-medium hover:text-[#3a1606] transition-colors p-1.5 rounded-lg hover:bg-[#501F08]/5">
                   <div className="w-10 h-10 rounded-full bg-[#501F08]/5 flex items-center justify-center text-[#501F08] text-sm font-bold shadow-inner overflow-hidden border border-[#501F08]/10">
@@ -322,7 +320,6 @@ export default function Header() {
                   </span>
                 </button>
 
-                {/* User Dropdown */}
                 <div className="absolute right-0 top-full pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
                   <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
                     <div className="p-3 border-b border-gray-100 bg-gray-50/50">
@@ -357,16 +354,16 @@ export default function Header() {
               >
                 <User size={22} />
               </Link>
-            )}
+            )} */}
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-3xl text-gray-700 focus:outline-none"
+            className="lg:hidden py-1.5 px-2 text-white focus:outline-none  rounded-lg transition-colors bg-[#501F08]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? "✖" : "☰"}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
@@ -375,7 +372,7 @@ export default function Header() {
           <nav className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-[#f7f7f7] shadow-lg h-[calc(100vh-80px)] overflow-y-auto w-full absolute left-0 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col px-6 py-4 space-y-4 font-medium text-gray-700">
               {/* User Info Mobile */}
-              {isAuthenticated && (
+              {/* {isAuthenticated && (
                 <div className="flex items-center gap-3 py-3 border-b mb-2">
                   <div className="w-10 h-10 rounded-full bg-[#501F08]/5 flex items-center justify-center text-[#501F08] font-bold shadow-md overflow-hidden border border-[#501F08]/10">
                     <img
@@ -392,7 +389,7 @@ export default function Header() {
                     <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <NavLink
                 to={APP_ROUTES.HOME}
@@ -435,7 +432,7 @@ export default function Header() {
                         collections.map((collection, index) => (
                           <Link
                             key={collection._id || collection.id}
-                            to={`/products?collection=${collection.name || collection.title}`}
+                            to={`/products?collectionId=${collection._id || collection.id}`}
                             className="group/mobile block"
                             onClick={() => {
                               setMobileMenuOpen(false);
@@ -551,21 +548,21 @@ export default function Header() {
               </NavLink>
 
               {/* Bulk Order Button - Mobile */}
-              <Link
+              {/* <Link
                 to="/bulk-order"
                 className="border border-[#501F08] text-[#501F08] px-4 py-3 rounded-md font-semibold text-center hover:bg-[#501F08] hover:text-white transition shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 BULK ORDER
-              </Link>
+              </Link> */}
 
               {/* Book Now Button - Mobile */}
               <Link
                 to="/contact"
-                className="bg-[#501F08] hover:bg-[#3a1606] text-white px-4 py-3 rounded-md font-semibold text-center shadow-md"
+                className="bg-[#501F08] hover:bg-[#3a1606] text-white px-4 py-3 rounded-md font-light text-center shadow-md"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                BOOK NOW
+                BOOK APPOINTMENT
               </Link>
 
               {/* Login / Logout Link - Mobile */}

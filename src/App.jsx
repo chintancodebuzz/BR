@@ -15,6 +15,7 @@ import ChangePassword from "./pages/profile/container/changepassword.container";
 import MyOrders from "./pages/profile/container/myorders.container";
 import OrderDetails from "./pages/profile/container/orderdetails.container";
 import Checkout from "./pages/checkout/container/checkout.container";
+import NotFound from "./pages/error/NotFound";
 import TopBar from "./components/home/topbar";
 import ScrollToTop from "./components/common/scrolltotop";
 import FloatingButtons from "./components/common/floatingbuttons";
@@ -34,7 +35,7 @@ const MainLayout = () => {
     <>
       <TopBar />
       <Header />
-      <main className={`grow pt-19 ${!isHomePage ? "bg-[#FDFDFD]" : ""}`}>
+      <main className={`grow pt-17 ${!isHomePage ? "bg-[#FDFDFD]" : ""}`}>
         <Outlet />
       </main>
       <Footer />
@@ -69,6 +70,7 @@ function App() {
               <Route path="address" element={<ManageAddress />} />
               <Route path="password" element={<ChangePassword />} />
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
 
           {/* Auth routes WITHOUT Header & Footer */}

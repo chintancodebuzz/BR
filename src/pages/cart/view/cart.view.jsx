@@ -38,7 +38,7 @@ const CartView = ({
 
     return (
         <div className=" bg-[#FDFDFD] pb-10">
-            <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12">
+            <div className="max-w-screen-2xl mx-auto px-4 md:px-12 py-8 md:py-12">
                 <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-black text-[#501F08] mb-2 tracking-tight">Shopping Cart</h1>

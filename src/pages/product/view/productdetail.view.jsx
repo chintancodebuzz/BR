@@ -65,7 +65,7 @@ const ProductDetailView = ({
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-screen-2xl mx-auto px-4 md:px-12 py-20 md:py-28">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                     {/* Image Gallery */}
                     <div className="space-y-4">
@@ -78,14 +78,14 @@ const ProductDetailView = ({
                                 </div>
                             )}
                             <div className="absolute top-4 right-4 z-10 flex gap-2">
-                                <button
+                                {/* <button
                                     onClick={handleWishlist}
                                     className={`p-2.5 rounded-full bg-white/90 backdrop-blur-sm shadow-md transition-all hover:scale-110 ${isInWishlist ? "text-[#501F08]" : "text-gray-400 hover:text-[#501F08]"}`}
                                 >
                                     <Heart
                                         className={`w-5 h-5 transition-colors ${isInWishlist ? "fill-[#501F08] text-[#501F08]" : "text-current"}`}
                                     />
-                                </button>
+                                </button> */}
                                 <button className="p-2.5 bg-white/90 backdrop-blur-sm rounded-full text-gray-400 shadow-md transition-all hover:scale-110 hover:text-[#501F08]">
                                     <Share2 className="w-5 h-5" />
                                 </button>
@@ -97,12 +97,12 @@ const ProductDetailView = ({
                             />
                         </div>
 
-                        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                        <div className="flex gap-4 overflow-x-auto p-2 scrollbar-hide">
                             {product.images?.map((img, idx) => (
                                 <button
                                     key={idx}
                                     onClick={() => setActiveImage(idx)}
-                                    className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${activeImage === idx ? "border-[#501F08] scale-105" : "border-transparent hover:border-gray-200"}`}
+                                    className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${activeImage === idx ? "border-[#7c7b7b] scale-105" : "border-transparent hover:border-gray-200"}`}
                                 >
                                     <img
                                         src={img}
@@ -232,7 +232,7 @@ const ProductDetailView = ({
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <button
+                                        {/* <button
                                             onClick={handleAddToCart}
                                             className="relative group overflow-hidden bg-[#501F08] text-white py-3 rounded-xl font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all"
                                         >
@@ -241,13 +241,13 @@ const ProductDetailView = ({
                                                 <ShoppingCart className="w-5 h-5" />
                                                 Add to Cart
                                             </span>
-                                        </button>
-                                        <button className="relative group overflow-hidden border-2 border-[#501F08] text-[#501F08] py-3 rounded-xl font-bold uppercase tracking-wider hover:text-white transition-all shadow-md hover:shadow-lg">
+                                        </button> */}
+                                        {/* <button className="relative group overflow-hidden border-2 border-[#501F08] text-[#501F08] py-3 rounded-xl font-bold uppercase tracking-wider hover:text-white transition-all shadow-md hover:shadow-lg">
                                             <div className="absolute inset-0 bg-[#501F08] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                                             <span className="relative z-10 flex items-center justify-center gap-2">
                                                 Buy Now
                                             </span>
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             ) : (

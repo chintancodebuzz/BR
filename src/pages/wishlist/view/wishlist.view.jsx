@@ -37,7 +37,7 @@ const WishlistView = ({
 
     return (
         <div className="bg-[#FDFDFD] pb-24">
-            <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12">
+            <div className="max-w-screen-2xl mx-auto px-4 md:px-12 py-8 md:py-12">
                 <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-black text-[#501F08] mb-2 tracking-tight">My Wishlist</h1>
@@ -112,7 +112,7 @@ const WishlistView = ({
                                             )}
                                         </div>
 
-                                        <button
+                                        {/* <button
                                             onClick={() => handleMoveToCart(item.id, item?.wishlistId)}
                                             className="w-full relative group/btn overflow-hidden bg-transparent border-2 border-[#501F08] text-[#501F08] py-3 px-4 rounded-xl font-black text-[10px] tracking-[0.15em] transition-all duration-300 hover:text-white hover:shadow-lg flex items-center justify-center gap-3 uppercase"
                                         >
@@ -121,7 +121,7 @@ const WishlistView = ({
                                                 <ShoppingCart size={16} className="group-hover/btn:scale-110 transition-transform" />
                                                 Move to Cart
                                             </span>
-                                        </button>
+                                        </button> */}
                                     </div>
                                 </div>
                             </div>

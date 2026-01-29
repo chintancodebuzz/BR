@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logos/favicon.png";
+import logo from "../../assets/logos/F_Logo.svg";
 import { Link } from "react-router-dom";
 import { Sparkles, Award, Heart, ArrowRight } from "lucide-react";
 
@@ -23,12 +23,12 @@ const About = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-linear-to-br from-[#fdf9f7] via-white to-[#fdf9f7] py-20">
+    <section className="relative overflow-hidden bg-linear-to-br from-[#fdf9f7] via-white to-[#fdf9f7] py-10 md:py-20">
       {/* Decorative Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#501F08]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#501F08]/5 rounded-full blur-3xl"></div>
 
-      <div className="relative mx-auto px-6 md:px-12 lg:px-24">
+      <div className="relative mx-auto px-4 md:px-12 lg:px-24">
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* LEFT CONTENT */}
@@ -40,20 +40,31 @@ const About = () => {
                 Premium Nail Care Brand
               </span>
             </div>
-
             {/* Brand Title */}
             <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4 text-center lg:text-left">
                 Welcome to{" "}
                 <span className="text-transparent bg-clip-text bg-linear-to-r from-[#501F08] to-[#8b3b14]">
                   BR Nails
                 </span>
               </h1>
-              <div className="w-24 h-1.5 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full"></div>
+              <div className="w-24 h-1.5 bg-linear-to-r from-[#501F08] to-[#8b3b14] rounded-full mx-auto lg:mx-0"></div>
+            </div>
+
+            {/* MOBILE ONLY LOGO - Positioned after "Welcome to" */}
+            <div className="lg:hidden relative py-2">
+              <div className="absolute inset-0 bg-linear-to-r from-[#501F08]/10 to-transparent rounded-full blur-3xl opacity-50"></div>
+              <div className="relative flex justify-center">
+                <img
+                  src={logo}
+                  alt="BR Nails Logo"
+                  className="w-48 sm:w-64 object-contain animate-float"
+                />
+              </div>
             </div>
 
             {/* Description */}
-            <div className="space-y-4">
+            <div className="space-y-4 text-center lg:text-left">
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                 Elevating beauty through premium nail artistry and professional
                 care. We bring luxury, creativity, and confidence to every
@@ -82,7 +93,7 @@ const About = () => {
             </div> */}
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
               <Link
                 to="/products"
                 className="group px-8 py-3.5 bg-[#501F08] text-white rounded-xl font-semibold hover:bg-[#3a1606] transition-all shadow-lg shadow-[#501F08]/25 hover:shadow-[#501F08]/40 flex items-center gap-2"
@@ -100,8 +111,8 @@ const About = () => {
             </div>
           </div>
 
-          {/* RIGHT LOGO */}
-          <div className="relative flex items-center justify-end">
+          {/* DESKTOP ONLY LOGO */}
+          <div className="hidden lg:flex relative items-center justify-end">
             {/* Glow Effect */}
             <div className="absolute inset-0 bg-linear-to-r from-[#501F08]/20 to-transparent rounded-full blur-3xl"></div>
 
